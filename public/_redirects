@@ -1,0 +1,17 @@
+# Redirects 301 desde las URLs del WordPress viejo
+/home                                          /                                        301
+/home/*                                        /:splat                                  301
+/estetica-dental-3                             /tratamientos/estetica-dental            301
+/salud-dental                                  /tratamientos/odontologia-general        301
+/implantes                                     /tratamientos/implantes-y-protesis       301
+/protesis                                      /tratamientos/implantes-y-protesis       301
+/ortodoncia                                    /tratamientos/ortodoncia                 301
+/articulos-de-interes                          /articulos                               301
+/exploracion-y-diagnostico-en-la-odontologia   /articulos                               301
+/consecuencias-de-la-perdida-de-un-diente      /articulos                               301
+/los-implantes-dentales                        /articulos                               301
+/bruxismo                                      /articulos                               301
+/higiene-dental                                /articulos                               301
+/alimentacion-y-salud-dental                   /articulos                               301
+/uso-correcto-del-hilo-dental                  /articulos                               301
+/salud-dental-y-embarazo                       /articulos                               301

@@ -1,0 +1,123 @@
+---
+import '@fontsource-variable/quicksand';
+import '@fontsource/open-sans/400.css';
+import '@fontsource/open-sans/600.css';
+import '@fontsource/dancing-script/600.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BarraMovil from '../components/BarraMovil.astro';
+import { SITE } from '../data/site';
+
+interface Props {
+  titulo: string;
+  descripcion?: string;
+}
+
+const { titulo, descripcion = SITE.descripcion } = Astro.props;
+const tituloCompleto =
+  titulo === 'inicio'
+    ? `${SITE.nombre} — ${SITE.tagline}`
+    : `${titulo} — ${SITE.nombre}`;
+const urlCanonica = new URL(Astro.url.pathname, SITE.url).href;
+const GTM_ID = import.meta.env.PUBLIC_GTM_ID;
+---
+
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={urlCanonica} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:url" content={urlCanonica} />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:image" content={new URL('/og.jpg', SITE.url).href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Dra. Ana Laura Batalles — Odontología estética y restauradora" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {
+      GTM_ID && (
+        <script
+          is:inline
+          define:vars={{ GTM_ID }}
+        >{`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',GTM_ID);`}</script>
+      )
+    }
+  </head>
+  <body>
+    {
+      GTM_ID && (
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style="display:none;visibility:hidden"
+            title="Google Tag Manager"
+          />
+        </noscript>
+      )
+    }
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <BarraMovil />
+
+    <script>
+      // Aparición sutil de secciones (una sola vez, respeta reduced-motion)
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const secciones = document.querySelectorAll('main section');
+        const observador = new IntersectionObserver(
+          (entradas) => {
+            entradas.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                observador.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px' }
+        );
+        secciones.forEach((s, i) => {
+          if (i === 0) return; // el hero no se anima
+          s.classList.add('revelar');
+          observador.observe(s);
+        });
+      }
+    </script>
+
+    <script>
+      // Eventos básicos para GA4 (vía GTM): click WhatsApp / teléfono / email.
+      declare global {
+        interface Window {
+          dataLayer?: Record<string, unknown>[];
+        }
+      }
+      document.addEventListener('click', (e) => {
+        const enlace = (e.target as HTMLElement).closest('a[data-evento]');
+        if (!enlace) return;
+        const tipo = enlace.getAttribute('data-evento');
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: `click_${tipo}`,
+          destino: enlace.getAttribute('href') ?? '',
+        });
+      });
+    </script>
+  </body>
+</html>

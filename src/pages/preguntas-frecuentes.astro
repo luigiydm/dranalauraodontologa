@@ -1,0 +1,140 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { faqs } from '../data/faqs';
+import osdeLogo from '../assets/obras-sociales/osde-logo-2020.png';
+import osde310 from '../assets/obras-sociales/OSDE-310.png';
+import osde410 from '../assets/obras-sociales/OSDE-410.png';
+import osde450 from '../assets/obras-sociales/OSDE-450.png';
+import osde510 from '../assets/obras-sociales/OSDE-510.png';
+
+const planes = [
+  { img: osde310, alt: 'OSDE 310' },
+  { img: osde410, alt: 'OSDE 410' },
+  { img: osde450, alt: 'OSDE 450' },
+  { img: osde510, alt: 'OSDE 510' },
+];
+---
+
+<Base
+  titulo="Preguntas frecuentes"
+  descripcion="Respuestas a las dudas más comunes sobre caries, bruxismo, ortodoncia, implantes y salud dental."
+>
+  <section class="seccion">
+    <div class="contenedor faq__inner">
+      <h1 class="titulo-seccion">Preguntas frecuentes</h1>
+      <p class="bajada">
+        Reunimos las dudas más habituales de nuestros pacientes. Si tu consulta no está acá,
+        escribinos y te respondemos personalmente.
+      </p>
+
+      <div class="faq__lista">
+        {
+          faqs.map((faq) => (
+            <details class="faq__item">
+              <summary>{faq.pregunta}</summary>
+              <div class="faq__respuesta" set:html={faq.respuesta} />
+            </details>
+          ))
+        }
+      </div>
+
+      <h2 class="titulo-seccion faq__os-titulo">Obras sociales</h2>
+      <details class="faq__item">
+        <summary>¿Qué obras sociales trabajamos?</summary>
+        <div class="faq__respuesta faq__os">
+          <Image src={osdeLogo} alt="OSDE" width={200} />
+          <div class="faq__os-planes">
+            {planes.map((plan) => <Image src={plan.img} alt={plan.alt} width={140} />)}
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .faq__inner {
+    max-width: 50rem;
+  }
+
+  h1.titulo-seccion {
+    font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+  }
+
+  .faq__lista {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .faq__item {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+    overflow: hidden;
+  }
+
+  .faq__item summary {
+    cursor: pointer;
+    padding: 1rem 1.3rem;
+    font-family: var(--fuente-titulos);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--tinta);
+    list-style: none;
+    position: relative;
+    padding-right: 3rem;
+  }
+
+  .faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__item summary::after {
+    content: '+';
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    translate: 0 -50%;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--malva);
+    transition: rotate 0.2s ease;
+  }
+
+  .faq__item[open] summary::after {
+    rotate: 45deg;
+  }
+
+  .faq__respuesta {
+    padding: 0 1.3rem 1.2rem;
+    color: var(--tinta-suave);
+    font-size: 0.95rem;
+  }
+
+  .faq__respuesta :global(ul) {
+    padding-left: 1.2em;
+  }
+
+  .faq__respuesta :global(li) {
+    margin-bottom: 0.3em;
+  }
+
+  .faq__os-titulo {
+    margin-top: 3rem;
+  }
+
+  .faq__os {
+    display: grid;
+    gap: 1.2rem;
+    justify-items: center;
+    padding-top: 0.5rem;
+  }
+
+  .faq__os-planes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+</style>

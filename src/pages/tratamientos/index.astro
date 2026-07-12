@@ -1,0 +1,150 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icono from '../../components/Icono.astro';
+import { tratamientos } from '../../data/tratamientos';
+---
+
+<Base
+  titulo="Tratamientos"
+  descripcion="Tratamientos odontológicos personalizados en Quilmes: estética dental, rehabilitación oral, implantes, prótesis, ortodoncia y odontología general."
+>
+  <section class="cabecera">
+    <div class="contenedor">
+      <h1>Tratamientos</h1>
+      <p>
+        Propuestas personalizadas para cuidar la salud, la función y la estética de tu sonrisa,
+        priorizando siempre un enfoque conservador.
+      </p>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="tratamientos__grilla">
+        {
+          tratamientos.map((tratamiento) => (
+            <a class="tratamiento" href={`/tratamientos/${tratamiento.slug}`}>
+              <div class="tratamiento__icono">
+                <Icono nombre={tratamiento.icono} />
+              </div>
+              <div class="tratamiento__punto" />
+              <h2>{tratamiento.titulo}</h2>
+              <p>{tratamiento.resumen}</p>
+              <span>Conocer más</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cabecera {
+    background: linear-gradient(180deg, var(--crema-2) 0%, var(--crema) 100%);
+    padding-block: clamp(3rem, 7vw, 5rem);
+    text-align: center;
+  }
+
+  .cabecera p {
+    max-width: 45rem;
+    margin: 0 auto;
+    color: var(--tinta-suave);
+  }
+
+  .tratamientos__grilla {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+  }
+
+  .tratamiento {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: var(--radio);
+    padding: 2rem 1.5rem;
+    color: inherit;
+    text-align: center;
+    text-decoration: none;
+    transition: translate 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .tratamiento:hover {
+    translate: 0 -4px;
+    box-shadow: var(--sombra);
+  }
+
+  .tratamiento:nth-child(4n + 1) {
+    background: var(--beige);
+  }
+
+  .tratamiento:nth-child(4n + 2) {
+    background: var(--beige-2);
+  }
+
+  .tratamiento:nth-child(4n + 3) {
+    background: var(--rosa);
+  }
+
+  .tratamiento:nth-child(4n + 4) {
+    background: var(--taupe);
+  }
+
+  .tratamiento__icono {
+    width: 56px;
+    height: 56px;
+    color: var(--linea);
+  }
+
+  .tratamiento__icono :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .tratamiento__punto {
+    width: 5px;
+    height: 5px;
+    margin: 0.4rem auto 1.1rem;
+    border-radius: 50%;
+    background: var(--linea);
+  }
+
+  .tratamiento h2 {
+    font-size: 1.02rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .tratamiento p {
+    flex: 1;
+    margin: 0;
+    color: var(--tinta-suave);
+    font-size: 0.94rem;
+  }
+
+  .tratamiento span {
+    margin-top: 1.1rem;
+    border-bottom: 1px solid currentColor;
+    color: var(--malva-oscuro);
+    font-family: var(--fuente-titulos);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    padding-bottom: 2px;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 900px) {
+    .tratamientos__grilla {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .tratamientos__grilla {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

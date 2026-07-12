@@ -1,0 +1,187 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icono from '../../components/Icono.astro';
+import { SITE } from '../../data/site';
+import { tratamientos, type Bloque } from '../../data/tratamientos';
+
+export function getStaticPaths() {
+  return tratamientos.map((t) => ({ params: { slug: t.slug }, props: { tratamiento: t } }));
+}
+
+const { tratamiento } = Astro.props;
+const otros = tratamientos.filter((t) => t.slug !== tratamiento.slug);
+---
+
+<Base titulo={tratamiento.titulo} descripcion={tratamiento.resumen}>
+  <section class="cabecera">
+    <div class="contenedor">
+      <div class="cabecera__icono">
+        <Icono nombre={tratamiento.icono} />
+      </div>
+      <h1>{tratamiento.titulo}</h1>
+    </div>
+  </section>
+
+  <section class="seccion cuerpo">
+    <div class="contenedor cuerpo__inner">
+      {tratamiento.intro.map((p) => <p class="cuerpo__intro">{p}</p>)}
+
+      {
+        tratamiento.bloques?.map((bloque: Bloque) => (
+          <div class="bloque">
+            {bloque.titulo && <h2>{bloque.titulo}</h2>}
+            {bloque.parrafos?.map((p) => <p>{p}</p>)}
+            {bloque.lista && (
+              <ul>
+                {bloque.lista.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))
+      }
+
+      {
+        tratamiento.subtratamientos?.map((sub) => (
+          <article class="subtratamiento">
+            <h2>{sub.titulo}</h2>
+            {sub.bloques.map((bloque: Bloque) => (
+              <div class="bloque">
+                {bloque.titulo && <h3>{bloque.titulo}</h3>}
+                {bloque.parrafos?.map((p) => <p>{p}</p>)}
+                {bloque.lista && (
+                  <ul>
+                    {bloque.lista.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </article>
+        ))
+      }
+
+      {tratamiento.cierre && <p class="cuerpo__cierre">{tratamiento.cierre}</p>}
+
+      <div class="cuerpo__cta">
+        <a href={SITE.whatsappTurno} target="_blank" rel="noopener" class="boton boton--primario" data-evento="whatsapp">
+          <Icono nombre="whatsapp" />
+          Solicitar turno
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion seccion--beige otros">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">Otros tratamientos</h2>
+      <nav class="otros__lista" aria-label="Otros tratamientos">
+        {otros.map((t) => <a href={`/tratamientos/${t.slug}`}>{t.titulo}</a>)}
+      </nav>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cabecera {
+    background: linear-gradient(180deg, var(--crema-2) 0%, var(--crema) 100%);
+    text-align: center;
+    padding-block: clamp(2.5rem, 6vw, 4rem) 1rem;
+  }
+
+  .cabecera__icono {
+    width: 62px;
+    height: 62px;
+    margin: 0 auto 0.6rem;
+    color: var(--linea);
+  }
+
+  .cabecera__icono :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .cabecera h1 {
+    letter-spacing: 0.06em;
+    font-weight: 400;
+  }
+
+  .cuerpo__inner {
+    max-width: 46rem;
+  }
+
+  .cuerpo__intro {
+    font-size: 1.06rem;
+    color: var(--tinta-suave);
+  }
+
+  .bloque h2,
+  .subtratamiento > h2 {
+    margin-top: 1.8em;
+    letter-spacing: 0.04em;
+  }
+
+  .subtratamiento > h2 {
+    padding-bottom: 0.35em;
+    border-bottom: 1px solid rgb(68 58 51 / 0.14);
+  }
+
+  .bloque h3 {
+    margin-top: 1.4em;
+    color: var(--malva-oscuro);
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .bloque ul {
+    padding-left: 1.2em;
+    margin: 0 0 1em;
+  }
+
+  .bloque li {
+    margin-bottom: 0.35em;
+  }
+
+  .cuerpo__cierre {
+    margin-top: 2.2em;
+    padding: 1.3em 1.6em;
+    background: var(--crema-2);
+    border-left: 3px solid var(--malva);
+    border-radius: 0 var(--radio) var(--radio) 0;
+    font-style: italic;
+    color: var(--tinta-suave);
+  }
+
+  .cuerpo__cta {
+    margin-top: 2.5rem;
+    text-align: center;
+  }
+
+  .otros__lista {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+
+  .otros__lista a {
+    font-family: var(--fuente-titulos);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--malva-oscuro);
+    background: #fff;
+    border-radius: 999px;
+    padding: 0.6em 1.3em;
+    box-shadow: var(--sombra);
+  }
+
+  .otros__lista a:hover {
+    background: var(--malva);
+    color: #fff;
+  }
+</style>

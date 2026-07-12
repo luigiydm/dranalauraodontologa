@@ -1,0 +1,158 @@
+---
+// Iconografía lineal minimalista, siguiendo la guía de estilo del cliente:
+// trazo fino y uniforme (1.5), formas geométricas simples, centradas en 64×64.
+// El punto decorativo bajo el icono lo aporta la tarjeta (.tarjeta__punto).
+interface Props {
+  nombre: string;
+}
+const { nombre } = Astro.props;
+---
+
+{
+  nombre === 'sonrisa' && (
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+      <path d="M14 24c4.5 13 11.5 19.5 18 19.5S45.5 37 50 24" />
+    </svg>
+  )
+}
+{
+  nombre === 'implante' && (
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+      <circle cx="32" cy="26" r="11" />
+      <path d="M32 10v44" />
+    </svg>
+  )
+}
+{
+  nombre === 'bracket' && (
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+      <path d="M10 32h16m12 0h16" />
+      <path d="M17 25v14M47 25v14" />
+      <rect x="26" y="26" width="12" height="12" rx="1.5" />
+    </svg>
+  )
+}
+{
+  nombre === 'arco' && (
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+      <path d="M18 50V30c0-8.3 6.3-15 14-15s14 6.7 14 15v20" />
+    </svg>
+  )
+}
+{
+  nombre === 'destello' && (
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">
+      <path d="M32 10c1.8 11.6 5.6 18.2 16 20-10.4 1.8-14.2 8.4-16 20-1.8-11.6-5.6-18.2-16-20 10.4-1.8 14.2-8.4 16-20Z" />
+    </svg>
+  )
+}
+{
+  nombre === 'anillos' && (
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <circle cx="25.5" cy="26" r="10" />
+      <circle cx="38.5" cy="26" r="10" />
+      <circle cx="32" cy="37" r="10" />
+    </svg>
+  )
+}
+{
+  nombre === 'diente' && (
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M23 12c-6 0-10 5-10 11.5 0 9.5 4.7 14.5 5.8 23 .4 3.2 1.9 4.5 3.6 4.5 3.8 0 3.4-11 9.6-11s5.8 11 9.6 11c1.7 0 3.2-1.3 3.6-4.5 1.1-8.5 5.8-13.5 5.8-23C51 17 47 12 41 12c-3.8 0-5.6 2-9 2s-5.2-2-9-2Z" />
+    </svg>
+  )
+}
+{
+  nombre === 'persona' && (
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+      <circle cx="32" cy="23" r="8" />
+      <path d="M16 49c2.4-9.6 8.4-14 16-14s13.6 4.4 16 14" />
+    </svg>
+  )
+}
+{
+  nombre === 'lupa' && (
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+      <circle cx="29" cy="28" r="13" />
+      <path d="M38.5 37.5 49 48" />
+    </svg>
+  )
+}
+{
+  nombre === 'reloj' && (
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+      <circle cx="32" cy="32" r="15" />
+      <path d="M32 23.5V32l6 4.5" />
+    </svg>
+  )
+}
+{
+  nombre === 'hoja' && (
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M47 15c-17 1.5-28 11-28 27 0 2.4.4 4.6 1.1 6.6 2 .7 4.2 1.1 6.6 1.1 16 0 25.5-11 27.3-27" />
+      <path d="M21 47c8.5-10.5 15-17 24-25" />
+    </svg>
+  )
+}
+{
+  nombre === 'corazon' && (
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M32 49.5C20.5 41 13.5 34 13.5 25.4c0-6 4.6-10.9 10.3-10.9 3.6 0 6.4 1.7 8.2 4.4 1.8-2.7 4.6-4.4 8.2-4.4 5.7 0 10.3 4.9 10.3 10.9C50.5 34 43.5 41 32 49.5Z" />
+    </svg>
+  )
+}
+{
+  nombre === 'whatsapp' && (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.6-6.1c-.3-.1-1.5-.8-1.8-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.6.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.6.1-.8l.5-.6c.1-.2.1-.4 0-.5l-.8-2c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 .9-1 2.3s1 2.7 1.2 2.9c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z" />
+    </svg>
+  )
+}
+{
+  nombre === 'instagram' && (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+      <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17" cy="7" r="0.9" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+{
+  nombre === 'facebook' && (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.7c0-.9.3-1.6 1.6-1.6h1.7V4.2c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.4H7.4V14h2.7v8h3.4Z" />
+    </svg>
+  )
+}
+{
+  nombre === 'ubicacion' && (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 21s-7-5.8-7-11a7 7 0 0 1 14 0c0 5.2-7 11-7 11Z" />
+      <circle cx="12" cy="10" r="2.5" />
+    </svg>
+  )
+}
+{
+  nombre === 'telefono' && (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" />
+    </svg>
+  )
+}
+{
+  nombre === 'email' && (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="m4.5 7.5 7.5 5.5 7.5-5.5" />
+    </svg>
+  )
+}
+{
+  nombre === 'calendario' && (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+      <rect x="3.5" y="5" width="17" height="16" rx="2" />
+      <path d="M3.5 10h17M8 3v4M16 3v4" />
+      <path d="M7.5 14h2M11 14h2M14.5 14h2M7.5 17.5h2M11 17.5h2" />
+    </svg>
+  )
+}

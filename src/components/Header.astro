@@ -1,0 +1,371 @@
+---
+import isotipo from '../assets/isotipo.svg';
+import logotipo from '../assets/logotipo.svg';
+import Icono from './Icono.astro';
+import { SITE } from '../data/site';
+---
+
+<div class="barra-superior">
+  <div class="contenedor barra-superior__inner">
+    <a href={SITE.mapsLink} target="_blank" rel="noopener" class="barra-superior__dir">
+      <Icono nombre="ubicacion" />
+      <span class="dir-completa">{SITE.direccion}</span>
+      <span class="dir-corta">Moreno 431, Quilmes</span>
+    </a>
+    <div class="barra-superior__redes">
+      <a href={SITE.whatsapp} target="_blank" rel="noopener" aria-label="WhatsApp" data-evento="whatsapp">
+        <Icono nombre="whatsapp" />
+      </a>
+      <a href={SITE.instagram} target="_blank" rel="noopener" aria-label="Instagram">
+        <Icono nombre="instagram" />
+      </a>
+    </div>
+  </div>
+</div>
+
+<header class="header">
+  <div class="contenedor header__inner">
+    <a href="/" class="marca" aria-label="Inicio — Dra. Ana Laura Batalles">
+      <img class="marca__iso" src={isotipo.src} alt="" width="46" height="59" loading="eager" />
+      <span class="marca__division" aria-hidden="true"></span>
+      <img
+        class="marca__nombre"
+        src={logotipo.src}
+        alt="Dra. Ana Laura Batalles — Odontología estética y restauradora"
+        width="244"
+        height="46"
+        loading="eager"
+      />
+    </a>
+
+    <button class="header__hamburguesa" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-principal">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="header__nav" id="nav-principal" aria-label="Navegación principal">
+      <a href="/">Inicio</a>
+      <div class="nav__desplegable">
+        <a href="/tratamientos" class="nav__desplegable-trigger">Tratamientos</a>
+        <div class="nav__submenu">
+          <a href="/tratamientos/estetica-dental">Estética dental</a>
+          <a href="/tratamientos/rehabilitacion-oral">Rehabilitación oral</a>
+          <a href="/tratamientos/implantes-y-protesis">Implantes y prótesis</a>
+          <a href="/tratamientos/ortodoncia">Ortodoncia</a>
+          <a href="/tratamientos/odontologia-general">Odontología general</a>
+        </div>
+      </div>
+      <a href="/preguntas-frecuentes">Preguntas frecuentes</a>
+      <a href="/articulos">Artículos</a>
+      <a href="/#contacto">Contacto</a>
+      <a href={SITE.whatsappTurno} target="_blank" rel="noopener" class="boton boton--primario nav__cta" data-evento="whatsapp">
+        Solicitar turno
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .barra-superior {
+    background: var(--malva);
+    color: #fff;
+    font-size: 0.82rem;
+  }
+
+  .barra-superior__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.45rem;
+  }
+
+  .barra-superior__dir {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .barra-superior__dir :global(svg) {
+    width: 1.05em;
+    height: 1.05em;
+    flex: none;
+  }
+
+  .barra-superior__redes {
+    display: flex;
+    gap: 0.9rem;
+  }
+
+  .barra-superior__redes a {
+    color: #fff;
+    display: inline-flex;
+  }
+
+  .barra-superior__redes :global(svg) {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .dir-corta {
+    display: none;
+  }
+
+  .header {
+    background: var(--crema);
+    border-bottom: 1px solid rgb(68 58 51 / 0.07);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.15rem;
+    position: relative;
+  }
+
+  /* Marca en tres piezas: isotipo · divisor · logotipo (como el mockup) */
+  .marca {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(0.8rem, 2vw, 1.15rem);
+    text-decoration: none;
+  }
+
+  .marca__iso {
+    height: 58px;
+    width: auto;
+  }
+
+  .marca__division {
+    width: 1px;
+    height: 46px;
+    background: rgb(68 58 51 / 0.3);
+  }
+
+  .marca__nombre {
+    height: 38px;
+    width: auto;
+  }
+
+  .header__nav {
+    display: flex;
+    align-items: center;
+    gap: 1.15rem;
+    font-family: var(--fuente-titulos);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .header__nav > a,
+  .nav__desplegable-trigger {
+    color: var(--tinta);
+    text-decoration: none;
+  }
+
+  .header__nav > a:hover,
+  .nav__desplegable-trigger:hover {
+    color: var(--malva-oscuro);
+  }
+
+  /* mismo comportamiento que el CTA del hero: oscuro que se aclara al hover */
+  .nav__cta {
+    font-size: 0.8rem;
+    padding: 0.7em 1.3em;
+    background: var(--malva-oscuro);
+  }
+
+  .nav__cta:hover {
+    background: var(--malva);
+  }
+
+  .nav__desplegable {
+    position: relative;
+  }
+
+  .nav__submenu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    translate: -50% 0;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+    padding: 0.6rem 0;
+    min-width: 220px;
+    display: none;
+    flex-direction: column;
+  }
+
+  .nav__desplegable:hover .nav__submenu,
+  .nav__desplegable:focus-within .nav__submenu {
+    display: flex;
+  }
+
+  .nav__submenu a {
+    padding: 0.5rem 1.2rem;
+    color: var(--tinta);
+    text-decoration: none;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .nav__submenu a:hover {
+    background: var(--crema-2);
+    color: var(--malva-oscuro);
+  }
+
+  /* Hamburguesa en marco redondeado, como el mockup */
+  .header__hamburguesa {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border: 1.5px solid rgb(68 58 51 / 0.5);
+    border-radius: 10px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    cursor: pointer;
+    flex: none;
+  }
+
+  .header__hamburguesa span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--tinta);
+    transition: 0.2s;
+  }
+
+  @media (max-width: 560px) {
+    .dir-completa {
+      display: none;
+    }
+
+    .dir-corta {
+      display: inline;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .barra-superior__dir span {
+      font-size: 0.76rem;
+    }
+
+    .header__inner {
+      justify-content: space-between;
+      padding-block: 0.9rem;
+    }
+
+    /* marca a la izquierda, hamburguesa a la derecha (como el mockup) */
+    .marca__iso {
+      height: 54px;
+    }
+
+    .marca__division {
+      height: 42px;
+    }
+
+    .marca__nombre {
+      height: 34px;
+    }
+
+    .header__hamburguesa {
+      display: flex;
+    }
+
+    .header__nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--crema);
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 0.5rem 0 1rem;
+      border-bottom: 1px solid rgb(68 58 51 / 0.1);
+      box-shadow: var(--sombra);
+    }
+
+    .header__nav.abierto {
+      display: flex;
+      animation: menu-abrir 0.2s ease;
+    }
+
+    @keyframes menu-abrir {
+      from {
+        opacity: 0;
+        translate: 0 -8px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .header__nav.abierto {
+        animation: none;
+      }
+    }
+
+    .header__nav > a,
+    .nav__desplegable-trigger {
+      padding: 0.7rem clamp(1rem, 4vw, 2rem);
+      display: block;
+    }
+
+    .nav__submenu {
+      position: static;
+      translate: none;
+      display: flex;
+      box-shadow: none;
+      background: var(--crema-2);
+      border-radius: 0;
+      padding: 0;
+    }
+
+    .nav__submenu a {
+      padding: 0.6rem clamp(2rem, 8vw, 3.5rem);
+    }
+
+    .nav__cta {
+      margin: 0.8rem clamp(1rem, 4vw, 2rem) 0;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 430px) {
+    .marca__nombre {
+      height: 30px;
+    }
+
+    .marca__iso {
+      height: 48px;
+    }
+  }
+</style>
+
+<script>
+  const boton = document.querySelector('.header__hamburguesa');
+  const nav = document.getElementById('nav-principal');
+  boton?.addEventListener('click', () => {
+    const abierto = nav?.classList.toggle('abierto');
+    boton.setAttribute('aria-expanded', String(Boolean(abierto)));
+  });
+  nav?.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).tagName === 'A') {
+      nav.classList.remove('abierto');
+      boton?.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>

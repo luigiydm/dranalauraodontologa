@@ -1,0 +1,163 @@
+---
+import logoClaro from '../assets/logo-apilado-blanco.svg';
+import Icono from './Icono.astro';
+import { SITE } from '../data/site';
+
+const anio = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="contenedor footer__grid">
+    <div class="footer__marca">
+      <img src={logoClaro.src} alt="Dra. Ana Laura Batalles" width="230" height="146" loading="lazy" />
+    </div>
+
+    <div class="footer__col">
+      <h3>Contacto</h3>
+      <ul>
+        <li>
+          <Icono nombre="ubicacion" />
+          <a href={SITE.mapsLink} target="_blank" rel="noopener">{SITE.direccion}</a>
+        </li>
+        <li>
+          <Icono nombre="telefono" />
+          <a href={SITE.telefonoHref} data-evento="telefono">{SITE.telefono}</a>
+        </li>
+        <li>
+          <Icono nombre="email" />
+          <a href={SITE.emailHref} data-evento="email">{SITE.email}</a>
+        </li>
+        <li>
+          <Icono nombre="whatsapp" />
+          <a href={SITE.whatsapp} target="_blank" rel="noopener" data-evento="whatsapp">Contactanos por WhatsApp</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h3>Secciones</h3>
+      <ul class="footer__links">
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/#tratamientos">Tratamientos</a></li>
+        <li><a href="/preguntas-frecuentes">Preguntas frecuentes</a></li>
+        <li><a href="/articulos">Artículos de interés</a></li>
+        <li><a href="/#contacto">Contacto</a></li>
+      </ul>
+      <div class="footer__redes">
+        <a href={SITE.instagram} target="_blank" rel="noopener" aria-label="Instagram"><Icono nombre="instagram" /></a>
+        <a href={SITE.facebook} target="_blank" rel="noopener" aria-label="Facebook"><Icono nombre="facebook" /></a>
+        <a href={SITE.whatsapp} target="_blank" rel="noopener" aria-label="WhatsApp" data-evento="whatsapp"><Icono nombre="whatsapp" /></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer__pie">
+    <div class="contenedor">
+      © {anio} Dra. Ana Laura Batalles — Odontología estética y restauradora
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--malva-oscuro);
+    color: rgb(255 255 255 / 0.9);
+    font-size: 0.92rem;
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: center;
+    gap: clamp(2.5rem, 7vw, 5.5rem);
+    padding-block: 3rem;
+    align-items: center;
+  }
+
+  .footer__marca img {
+    width: min(230px, 100%);
+    height: auto;
+    opacity: 0.95;
+  }
+
+  .footer h3 {
+    color: #fff;
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .footer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .footer li {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+  }
+
+  .footer li :global(svg) {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex: none;
+    margin-top: 0.2rem;
+    opacity: 0.85;
+  }
+
+  .footer a {
+    color: rgb(255 255 255 / 0.9);
+    text-decoration: none;
+  }
+
+  .footer a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  .footer__redes {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.4rem;
+  }
+
+  .footer__redes :global(svg) {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .footer__pie {
+    border-top: 1px solid rgb(255 255 255 / 0.15);
+    padding-block: 1rem;
+    font-size: 0.8rem;
+    text-align: center;
+    color: rgb(255 255 255 / 0.65);
+  }
+
+  @media (max-width: 820px) {
+    .footer__grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .footer li {
+      justify-content: center;
+      text-align: left;
+    }
+
+    .footer__redes {
+      justify-content: center;
+    }
+
+    .footer__marca img {
+      width: 180px;
+    }
+  }
+</style>

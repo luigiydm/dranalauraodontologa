@@ -1,0 +1,141 @@
+---
+import Base from '../layouts/Base.astro';
+import { articulos } from '../data/articulos';
+---
+
+<Base
+  titulo="Artículos de interés"
+  descripcion="Videos y contenidos sobre salud dental: higiene, implantes, bruxismo, alimentación y más."
+>
+  <section class="seccion">
+    <div class="contenedor">
+      <h1 class="titulo-seccion">Artículos de interés</h1>
+      <p class="bajada">Contenidos breves en video para cuidar tu salud dental día a día.</p>
+
+      <div class="articulos__grilla">
+        {
+          articulos.map((articulo) => (
+            <article class="articulo">
+              <button
+                class="articulo__video"
+                data-video={articulo.youtubeId}
+                data-start={articulo.start ?? 0}
+                aria-label={`Reproducir video: ${articulo.titulo}`}
+              >
+                <img
+                  src={`https://i.ytimg.com/vi/${articulo.youtubeId}/hqdefault.jpg`}
+                  alt=""
+                  loading="lazy"
+                  width="480"
+                  height="360"
+                />
+                <span class="articulo__play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5.5v13l11-6.5-11-6.5Z" />
+                  </svg>
+                </span>
+              </button>
+              <h2>{articulo.titulo}</h2>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  h1.titulo-seccion {
+    font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+  }
+
+  .articulos__grilla {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.8rem;
+  }
+
+  .articulo__video {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: none;
+    border-radius: var(--radio);
+    overflow: hidden;
+    cursor: pointer;
+    padding: 0;
+    background: var(--tinta);
+    box-shadow: var(--sombra);
+  }
+
+  .articulo__video img,
+  .articulo__video :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 0;
+  }
+
+  .articulo__play {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    background: rgb(68 58 51 / 0.25);
+    transition: background 0.2s ease;
+  }
+
+  .articulo__video:hover .articulo__play {
+    background: rgb(68 58 51 / 0.45);
+  }
+
+  .articulo__play svg {
+    width: 56px;
+    height: 56px;
+    filter: drop-shadow(0 2px 8px rgb(0 0 0 / 0.4));
+  }
+
+  .articulo h2 {
+    font-size: 1.02rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin: 0.8rem 0 0;
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .articulos__grilla {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .articulos__grilla {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // Carga diferida de YouTube: el iframe recién se inserta al hacer click.
+  document.querySelectorAll<HTMLButtonElement>('.articulo__video').forEach((boton) => {
+    boton.addEventListener(
+      'click',
+      () => {
+        const id = boton.dataset.video;
+        const start = boton.dataset.start;
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&start=${start}`;
+        iframe.title = boton.getAttribute('aria-label') ?? 'Video';
+        iframe.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture';
+        iframe.allowFullscreen = true;
+        boton.replaceChildren(iframe);
+      },
+      { once: true }
+    );
+  });
+</script>

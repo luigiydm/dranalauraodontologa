@@ -1,0 +1,61 @@
+---
+import Icono from './Icono.astro';
+import { SITE } from '../data/site';
+---
+
+<nav class="barra-movil" aria-label="Accesos rápidos">
+  <a href={SITE.whatsappTurno} target="_blank" rel="noopener" data-evento="whatsapp">
+    <Icono nombre="calendario" />
+    <span>Turnos</span>
+  </a>
+  <a href={SITE.whatsapp} target="_blank" rel="noopener" data-evento="whatsapp">
+    <Icono nombre="whatsapp" />
+    <span>WhatsApp</span>
+  </a>
+  <a href={SITE.instagram} target="_blank" rel="noopener">
+    <Icono nombre="instagram" />
+    <span>Instagram</span>
+  </a>
+  <a href={SITE.mapsLink} target="_blank" rel="noopener">
+    <Icono nombre="ubicacion" />
+    <span>Cómo llegar</span>
+  </a>
+</nav>
+
+<style>
+  .barra-movil {
+    display: none;
+  }
+
+  @media (max-width: 760px) {
+    .barra-movil {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 60;
+      background: var(--malva);
+      padding: 0.5rem 0.2rem calc(0.5rem + env(safe-area-inset-bottom));
+    }
+
+    .barra-movil a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.15rem;
+      color: #fff;
+      text-decoration: none;
+      font-family: var(--fuente-titulos);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .barra-movil :global(svg) {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+</style>

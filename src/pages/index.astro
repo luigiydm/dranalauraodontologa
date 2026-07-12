@@ -1,0 +1,377 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Icono from '../components/Icono.astro';
+import SeccionContacto from '../components/SeccionContacto.astro';
+import { SITE } from '../data/site';
+import { tratamientos } from '../data/tratamientos';
+import fotoAna from '../assets/consultorio/foto-ana_Mesa-de-trabajo-1-1.jpg';
+
+const propuestaDeValor = [
+  {
+    icono: 'anillos',
+    titulo: 'Enfoque integral',
+    texto: 'Estética, salud y función trabajadas en conjunto.',
+  },
+  {
+    icono: 'hoja',
+    titulo: 'Odontología conservadora',
+    texto: 'Priorizamos preservar cada pieza dental.',
+  },
+  {
+    icono: 'persona',
+    titulo: 'Tratamientos personalizados',
+    texto: 'Cada diagnóstico y tratamiento es único.',
+  },
+  {
+    icono: 'sonrisa',
+    titulo: 'Resultados naturales',
+    texto: 'Buscamos mejorar sin alterar la identidad de tu sonrisa.',
+  },
+];
+
+const experiencia = [
+  {
+    icono: 'persona',
+    titulo: 'Atención personalizada',
+    texto:
+      'Cada paciente es único. Dedicamos el tiempo necesario para comprender cada caso y definir el tratamiento más adecuado.',
+  },
+  {
+    icono: 'lupa',
+    titulo: 'Diagnóstico claro',
+    texto:
+      'Explicamos cada situación y las alternativas disponibles, para que puedas tomar decisiones con tranquilidad.',
+  },
+  {
+    icono: 'reloj',
+    titulo: 'Tratamientos sin apuro',
+    texto:
+      'Respetamos los tiempos de cada proceso, priorizando resultados duraderos por sobre soluciones rápidas.',
+  },
+  {
+    icono: 'corazon',
+    titulo: 'Seguimiento cercano',
+    texto:
+      'Acompañamos cada etapa del tratamiento, asegurando evolución y resultados en el tiempo.',
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Dentist',
+  name: SITE.nombre,
+  description: SITE.descripcion,
+  url: SITE.url,
+  telephone: '+541142576145',
+  email: SITE.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Moreno 431',
+    addressLocality: 'Quilmes',
+    addressRegion: 'Provincia de Buenos Aires',
+    addressCountry: 'AR',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: SITE.geo.lat,
+    longitude: SITE.geo.lng,
+  },
+  sameAs: [SITE.facebook, SITE.instagram],
+};
+---
+
+<Base titulo="inicio">
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+
+  <Hero />
+
+  <!-- Filosofía de trabajo -->
+  <section class="seccion seccion--beige filosofia">
+    <div class="contenedor">
+      <p class="filosofia__texto">
+        “Realizamos tratamientos personalizados que buscan una sonrisa armónica y natural,
+        cuidando la salud, la función y la estructura dental, y priorizando la conservación
+        de cada pieza siempre que sea posible”
+      </p>
+    </div>
+  </section>
+
+  <!-- Dra. Ana Laura Batalles -->
+  <section class="seccion doctora">
+    <div class="contenedor doctora__grid">
+      <div class="doctora__foto">
+        <Image src={fotoAna} alt="Dra. Ana Laura Batalles" width={520} class="foto-calida" />
+        <div class="tinte-marca" aria-hidden="true"></div>
+      </div>
+      <div>
+        <h2>Un enfoque profesional centrado en cada paciente</h2>
+        <p>
+          Abordamos la odontología desde un enfoque que respeta los tiempos, la biología y la
+          identidad de cada persona. Cada tratamiento comienza con un diagnóstico cuidadoso y
+          una planificación personalizada, buscando siempre el equilibrio entre estética,
+          salud y función.
+        </p>
+        <p>Nuestro objetivo es lograr resultados naturales, duraderos y en armonía con cada paciente.</p>
+        <p>
+          La Dra. Ana Laura Batalles cuenta con una sólida trayectoria en el ámbito profesional
+          y académico, con experiencia en rehabilitaciones orales de alta complejidad y una
+          participación constante en actividades de actualización, tanto como asistente como
+          disertante.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Propuesta de valor -->
+  <section class="seccion seccion--beige">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">Nuestra propuesta de valor</h2>
+      <div class="grilla-tarjetas grilla-tarjetas--4">
+        {
+          propuestaDeValor.map((item) => (
+            <div class="tarjeta">
+              <div class="tarjeta__icono">
+                <Icono nombre={item.icono} />
+              </div>
+              <div class="tarjeta__punto" />
+              <h3>{item.titulo}</h3>
+              <p>{item.texto}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Tratamientos -->
+  <section class="seccion" id="tratamientos">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">Tratamientos</h2>
+      <p class="bajada">
+        Ofrecemos tratamientos adaptados a cada necesidad, con un enfoque personalizado que
+        prioriza la salud, la función y la estética. Utilizamos técnicas que permiten preservar
+        la mayor cantidad posible de estructura dental.
+      </p>
+      <div class="grilla-tarjetas grilla-tarjetas--3">
+        {
+          tratamientos.map((t) => (
+            <a class="tarjeta tarjeta--enlace" href={`/tratamientos/${t.slug}`}>
+              <div class="tarjeta__icono">
+                <Icono nombre={t.icono} />
+              </div>
+              <div class="tarjeta__punto" />
+              <h3>{t.titulo}</h3>
+              <p>{t.resumen}</p>
+              <span class="tarjeta__mas">Conocer más</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Diferencial -->
+  <section class="seccion seccion--malva diferencial">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">Una forma distinta de abordar la estética dental</h2>
+      <div class="diferencial__texto">
+        <p>No se trata solo de mejorar la estética, sino de hacerlo respetando la salud y la función.</p>
+        <p>
+          Indicamos cada tratamiento a partir de un diagnóstico preciso, priorizando siempre la
+          opción más conservadora y adecuada para cada paciente.
+        </p>
+        <p>Buscamos resultados naturales, armónicos y duraderos, evitando intervenciones innecesarias.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experiencia del paciente -->
+  <section class="seccion">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">Un espacio pensado para cada paciente</h2>
+      <p class="bajada">
+        Brindamos una atención cercana y personalizada, en un entorno cuidado donde cada paciente
+        puede sentirse cómodo y acompañado durante todo el proceso. Nos tomamos el tiempo
+        necesario para escuchar, evaluar y explicar cada tratamiento con claridad.
+      </p>
+      <div class="grilla-tarjetas grilla-tarjetas--4">
+        {
+          experiencia.map((item) => (
+            <div class="tarjeta">
+              <div class="tarjeta__icono">
+                <Icono nombre={item.icono} />
+              </div>
+              <div class="tarjeta__punto" />
+              <h3>{item.titulo}</h3>
+              <p>{item.texto}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Bioseguridad -->
+  <section class="seccion seccion--beige bioseguridad">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">Bioseguridad</h2>
+      <div class="bioseguridad__texto">
+        <p>La bioseguridad es muy importante para usted y para nosotros.</p>
+        <p>Mantener los ambientes lo más asépticos posible es una tarea que realizamos día a día.</p>
+        <p>
+          Contamos con recolección de residuos patogénicos, limpieza continua de las áreas
+          utilizadas entre paciente y paciente, instrumental esterilizado en autoclave, material
+          descartable para cada paciente que ingresa a nuestros consultorios, paredes y aberturas
+          plomadas para protección contra RX y estrictas normas de bioseguridad basándonos en los
+          reglamentos internacionales dispuestos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="seccion cta-final">
+    <div class="contenedor">
+      <h2>Agendá tu consulta</h2>
+      <p>Evaluamos tu caso de forma personalizada para definir el tratamiento más adecuado para vos.</p>
+      <a href={SITE.whatsappTurno} target="_blank" rel="noopener" class="boton boton--primario" data-evento="whatsapp">
+        <Icono nombre="whatsapp" />
+        Solicitar turno
+      </a>
+    </div>
+  </section>
+
+  <SeccionContacto />
+</Base>
+
+<style>
+  .filosofia__texto {
+    max-width: 52rem;
+    margin: 0 auto;
+    text-align: center;
+    font-family: var(--fuente-titulos);
+    font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+    font-weight: 400;
+    color: var(--tinta-suave);
+    line-height: 1.6;
+  }
+
+  .doctora__grid {
+    display: grid;
+    grid-template-columns: minmax(240px, 340px) 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  .doctora__foto {
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    box-shadow: var(--sombra);
+  }
+
+  .doctora__foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .grilla-tarjetas {
+    display: grid;
+    gap: 1.4rem;
+  }
+
+  .grilla-tarjetas--4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .grilla-tarjetas--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .tarjeta--enlace {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: translate 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .tarjeta--enlace:hover {
+    translate: 0 -4px;
+    box-shadow: var(--sombra);
+  }
+
+  .tarjeta--enlace p {
+    flex: 1;
+  }
+
+  .tarjeta__mas {
+    margin-top: 1.1rem;
+    font-family: var(--fuente-titulos);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--malva-oscuro);
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+  }
+
+  .diferencial__texto {
+    max-width: 46rem;
+    margin: 0 auto;
+    text-align: center;
+    color: rgb(255 255 255 / 0.92);
+  }
+
+  .bioseguridad__texto {
+    max-width: 50rem;
+    margin: 0 auto;
+    text-align: center;
+    color: var(--tinta-suave);
+  }
+
+  .cta-final .contenedor {
+    text-align: center;
+  }
+
+  .cta-final h2 {
+    letter-spacing: 0.06em;
+  }
+
+  .cta-final p {
+    color: var(--tinta-suave);
+    margin-bottom: 1.6rem;
+  }
+
+  @media (max-width: 960px) {
+    .grilla-tarjetas--4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grilla-tarjetas--3 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .doctora__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .doctora__foto {
+      max-width: 300px;
+      margin-inline: auto;
+    }
+
+    .grilla-tarjetas--4,
+    .grilla-tarjetas--3 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,314 @@
+---
+import { Image } from 'astro:assets';
+import Icono from './Icono.astro';
+import { SITE } from '../data/site';
+import img1 from '../assets/consultorio/hero/IMG-1.jpg';
+import img2 from '../assets/consultorio/hero/IMG-2.jpg';
+import img3 from '../assets/consultorio/hero/IMG-3.jpg';
+import img4 from '../assets/consultorio/hero/IMG-4.jpg';
+
+// encuadre propio por foto: la zona izquierda queda libre para el texto
+const fotos = [
+  { img: img1, alt: 'Consultorio de la Dra. Ana Laura Batalles', pos: '62% 42%' },
+  { img: img2, alt: 'Sala de atención del consultorio', pos: '70% 45%' },
+  { img: img3, alt: 'Recepción del consultorio', pos: '60% 50%' },
+  { img: img4, alt: 'Sala de espera del consultorio', pos: '50% 55%' },
+];
+---
+
+<section class="hero" data-carrusel>
+  {
+    fotos.map((foto, i) => (
+      <div class:list={['hero__slide', { activo: i === 0 }]}>
+        <Image
+          src={foto.img}
+          alt={foto.alt}
+          width={1800}
+          loading={i <= 1 ? 'eager' : 'lazy'}
+          style={`object-position: ${foto.pos}`}
+        />
+      </div>
+    ))
+  }
+  <div class="hero__tinte" aria-hidden="true"></div>
+  <div class="hero__isla" aria-hidden="true"></div>
+
+  <div class="contenedor hero__contenido">
+    <h1>
+      Estética y salud dental con un enfoque natural y
+      <span class="hero__acento">personalizado</span>
+    </h1>
+    <a href={SITE.whatsappTurno} target="_blank" rel="noopener" class="boton boton--primario hero__cta" data-evento="whatsapp">
+      <Icono nombre="calendario" />
+      Solicitar turno
+    </a>
+  </div>
+
+  <button class="hero__flecha hero__flecha--prev" aria-label="Foto anterior">‹</button>
+  <button class="hero__flecha hero__flecha--next" aria-label="Foto siguiente">›</button>
+  <div class="hero__puntos" role="tablist" aria-label="Fotos del consultorio">
+    {fotos.map((_, i) => (
+      <button class:list={['hero__punto', { activo: i === 0 }]} aria-label={`Ver foto ${i + 1}`} data-indice={i} />
+    ))}
+  </div>
+</section>
+
+<style>
+  /* Foto protagonista, tinte cálido uniforme y remate inferior curvo. */
+  .hero {
+    position: relative;
+    /* ancho siempre completo; solo la altura se limita
+       (aspect-ratio + max-height encogían la caja en pantallas anchas) */
+    height: min(45.45vw, 640px);
+    min-height: 460px;
+    overflow: hidden;
+    border-radius: 0 0 50% 50% / 0 0 96px 96px;
+    background: var(--crema-2);
+  }
+
+  .hero__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+  }
+
+  .hero__slide.activo {
+    opacity: 1;
+  }
+
+  .hero__slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Tinte rosado-beige parejo, único tratamiento de color */
+  .hero__tinte {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: #cba392;
+    mix-blend-mode: multiply;
+    opacity: 0.22;
+  }
+
+  /* "Isla" cálida y localizada: el campo visual del texto */
+  .hero__isla {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse 580px 440px at 50% 58%,
+      rgb(242 226 214 / 0.55),
+      rgb(242 226 214 / 0.22) 52%,
+      rgb(242 226 214 / 0) 70%
+    );
+  }
+
+  /* En desktop el copy va centrado en la mitad del hero,
+     apenas corrido hacia abajo para no pisar el monitor */
+  .hero__contenido {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 4.5rem;
+  }
+
+  .hero__contenido h1 {
+    max-width: 14ch;
+    font-weight: 500;
+    font-size: clamp(1.8rem, 3.4vw, 2.55rem);
+    color: #45382f;
+    margin-bottom: 0.9em;
+    text-shadow: 0 2px 16px rgb(120 86 66 / 0.22);
+  }
+
+  .hero__acento {
+    display: block;
+    font-family: 'Dancing Script', cursive;
+    font-weight: 600;
+    font-size: 1.12em;
+    margin-top: 0.1em;
+  }
+
+  .hero__cta {
+    background: var(--malva-oscuro);
+  }
+
+  .hero__cta:hover {
+    background: var(--malva);
+  }
+
+  .hero__flecha {
+    position: absolute;
+    top: 68%;
+    z-index: 3;
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.75);
+    color: var(--tinta);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    padding-bottom: 3px;
+    transition: background 0.2s ease;
+  }
+
+  .hero__flecha:hover {
+    background: #fff;
+  }
+
+  .hero__flecha--prev {
+    left: 20px;
+  }
+
+  .hero__flecha--next {
+    right: 20px;
+  }
+
+  /* en tablet el CTA baja: correr las flechas para que no se pisen */
+  @media (min-width: 761px) and (max-width: 1100px) {
+    .hero__flecha {
+      top: 80%;
+    }
+  }
+
+  .hero__puntos {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    translate: -50% 0;
+    z-index: 3;
+    display: flex;
+    gap: 0.55rem;
+  }
+
+  .hero__punto {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgb(255 255 255 / 0.75);
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s ease;
+  }
+
+  .hero__punto.activo {
+    background: var(--malva);
+  }
+
+  @media (max-width: 760px) {
+    .hero {
+      aspect-ratio: 1.3 / 1;
+      height: auto;
+      min-height: 0;
+      border-radius: 0 0 50% 50% / 0 0 44px 44px;
+    }
+
+    /* en móvil vuelve al esquema del mockup: texto arriba a la izquierda */
+    .hero__contenido {
+      justify-content: flex-start;
+      align-items: flex-start;
+      text-align: left;
+      padding-top: 1.1rem;
+    }
+
+    .hero__contenido h1 {
+      font-size: 1.28rem;
+      max-width: 14ch;
+      margin-bottom: 0.9em;
+    }
+
+    /* la isla acompaña al texto también en móvil */
+    .hero__isla {
+      background: radial-gradient(
+        ellipse 300px 250px at 28% 24%,
+        rgb(242 226 214 / 0.5),
+        rgb(242 226 214 / 0.2) 55%,
+        rgb(242 226 214 / 0) 72%
+      );
+    }
+
+    .hero__cta {
+      font-size: 0.78rem;
+      padding: 0.75em 1.3em;
+    }
+
+    .hero__flecha {
+      width: 34px;
+      height: 34px;
+      top: 58%;
+    }
+
+    .hero__flecha--prev {
+      left: 12px;
+    }
+
+    .hero__flecha--next {
+      right: 12px;
+    }
+
+    .hero__puntos {
+      bottom: 16px;
+    }
+  }
+</style>
+
+<script>
+  const carrusel = document.querySelector('[data-carrusel]');
+  if (carrusel) {
+    const slides = carrusel.querySelectorAll('.hero__slide');
+    const puntos = carrusel.querySelectorAll('.hero__punto');
+    let actual = 0;
+    let timer: ReturnType<typeof setInterval> | undefined;
+
+    const mostrar = (i: number) => {
+      slides[actual].classList.remove('activo');
+      puntos[actual].classList.remove('activo');
+      actual = (i + slides.length) % slides.length;
+      slides[actual].classList.add('activo');
+      puntos[actual].classList.add('activo');
+    };
+
+    const pausar = () => {
+      clearInterval(timer);
+      timer = undefined;
+    };
+
+    const reanudar = () => {
+      if (timer) return;
+      timer = setInterval(() => mostrar(actual + 1), 5000);
+    };
+
+    carrusel.querySelector('.hero__flecha--prev')?.addEventListener('click', () => {
+      mostrar(actual - 1);
+    });
+    carrusel.querySelector('.hero__flecha--next')?.addEventListener('click', () => {
+      mostrar(actual + 1);
+    });
+    puntos.forEach((p) =>
+      p.addEventListener('click', () => {
+        mostrar(Number((p as HTMLElement).dataset.indice));
+      })
+    );
+
+    // pausa al interactuar, retoma al salir
+    carrusel.addEventListener('mouseenter', pausar);
+    carrusel.addEventListener('mouseleave', reanudar);
+    carrusel.addEventListener('touchstart', pausar, { passive: true });
+    carrusel.addEventListener('touchend', () => setTimeout(reanudar, 4000), { passive: true });
+
+    reanudar();
+  }
+</script>

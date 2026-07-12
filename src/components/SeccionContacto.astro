@@ -1,0 +1,245 @@
+---
+import Icono from './Icono.astro';
+import { SITE } from '../data/site';
+
+const TURNSTILE_SITEKEY = import.meta.env.PUBLIC_TURNSTILE_SITEKEY;
+---
+
+<section class="seccion seccion--beige" id="contacto">
+  <div class="contenedor">
+    <h2 class="titulo-seccion">Contacto</h2>
+    <p class="bajada">
+      Escribinos por el medio que te quede más cómodo y te responderemos a la brevedad.
+    </p>
+
+    <div class="contacto__grid">
+      <div class="contacto__datos">
+        <ul>
+          <li>
+            <Icono nombre="ubicacion" />
+            <a href={SITE.mapsLink} target="_blank" rel="noopener">{SITE.direccion}</a>
+          </li>
+          <li>
+            <Icono nombre="telefono" />
+            <a href={SITE.telefonoHref} data-evento="telefono">{SITE.telefono}</a>
+          </li>
+          <li>
+            <Icono nombre="email" />
+            <a href={SITE.emailHref} data-evento="email">{SITE.email}</a>
+          </li>
+          <li>
+            <Icono nombre="whatsapp" />
+            <a href={SITE.whatsapp} target="_blank" rel="noopener" data-evento="whatsapp">
+              Contactanos por WhatsApp por cualquier consulta o inquietud
+            </a>
+          </li>
+          <li>
+            <Icono nombre="instagram" />
+            <a href={SITE.instagram} target="_blank" rel="noopener">@draanalaurabatalles</a>
+          </li>
+          <li>
+            <Icono nombre="facebook" />
+            <a href={SITE.facebook} target="_blank" rel="noopener">/Dra.Batalles</a>
+          </li>
+        </ul>
+      </div>
+
+      <form class="contacto__form" method="POST" action="/api/contact" novalidate>
+        <label>
+          Nombre
+          <input type="text" name="nombre" required autocomplete="name" />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" required autocomplete="email" />
+        </label>
+        <label>
+          Mensaje
+          <textarea name="mensaje" rows="5" required></textarea>
+        </label>
+        <!-- honeypot anti-spam -->
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="contacto__hp" />
+        {TURNSTILE_SITEKEY && <div class="cf-turnstile" data-sitekey={TURNSTILE_SITEKEY}></div>}
+        <button type="submit" class="boton boton--primario">Enviar</button>
+        <p class="contacto__estado" role="status" aria-live="polite"></p>
+      </form>
+
+      <div class="contacto__mapa">
+        <iframe
+          src={SITE.mapsEmbed}
+          width="100%"
+          height="100%"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Ubicación del consultorio en Google Maps"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+{TURNSTILE_SITEKEY && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<style>
+  .contacto__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .contacto__datos ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .contacto__datos li {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    font-size: 0.95rem;
+  }
+
+  .contacto__datos li :global(svg) {
+    width: 1.2rem;
+    height: 1.2rem;
+    flex: none;
+    margin-top: 0.15rem;
+    color: var(--malva-oscuro);
+  }
+
+  .contacto__datos a {
+    color: var(--tinta);
+    text-decoration: none;
+  }
+
+  .contacto__datos a:hover {
+    color: var(--malva-oscuro);
+    text-decoration: underline;
+  }
+
+  .contacto__form {
+    display: grid;
+    gap: 1rem;
+    background: #fff;
+    border-radius: var(--radio);
+    padding: 1.6rem;
+    box-shadow: var(--sombra);
+  }
+
+  .contacto__form label {
+    display: grid;
+    gap: 0.35rem;
+    font-family: var(--fuente-titulos);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+
+  .contacto__form input,
+  .contacto__form textarea {
+    font-family: var(--fuente-texto);
+    font-size: 0.95rem;
+    padding: 0.65em 0.8em;
+    border: 1px solid rgb(68 58 51 / 0.2);
+    border-radius: 8px;
+    background: var(--crema);
+    color: var(--tinta);
+    resize: vertical;
+  }
+
+  .contacto__form input:focus,
+  .contacto__form textarea:focus {
+    outline: 2px solid var(--malva);
+    border-color: transparent;
+  }
+
+  .contacto__hp {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .contacto__estado {
+    margin: 0;
+    font-size: 0.9rem;
+    min-height: 1.4em;
+  }
+
+  .contacto__estado.ok {
+    color: #2e7d32;
+  }
+
+  .contacto__estado.error {
+    color: #b3261e;
+  }
+
+  .contacto__mapa {
+    border-radius: var(--radio);
+    overflow: hidden;
+    min-height: 340px;
+    box-shadow: var(--sombra);
+  }
+
+  .contacto__mapa iframe {
+    min-height: 340px;
+  }
+
+  @media (max-width: 960px) {
+    .contacto__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contacto__mapa {
+      min-height: 280px;
+    }
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('.contacto__form');
+  const estado = document.querySelector<HTMLElement>('.contacto__estado');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    const boton = form.querySelector<HTMLButtonElement>('button[type=submit]');
+    if (boton) {
+      boton.disabled = true;
+      boton.textContent = 'Enviando…';
+    }
+    if (estado) {
+      estado.textContent = '';
+      estado.className = 'contacto__estado';
+    }
+
+    try {
+      const respuesta = await fetch('/api/contact', {
+        method: 'POST',
+        body: new FormData(form),
+      });
+      if (!respuesta.ok) throw new Error(String(respuesta.status));
+      form.reset();
+      if (estado) {
+        estado.textContent = 'Tu mensaje ha sido enviado. ¡Gracias por escribirnos!';
+        estado.classList.add('ok');
+      }
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'envio_formulario' });
+    } catch {
+      if (estado) {
+        estado.textContent =
+          'No pudimos enviar el mensaje. Probá de nuevo o escribinos por WhatsApp.';
+        estado.classList.add('error');
+      }
+    } finally {
+      if (boton) {
+        boton.disabled = false;
+        boton.textContent = 'Enviar';
+      }
+    }
+  });
+</script>
