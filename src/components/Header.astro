@@ -175,7 +175,14 @@ import { SITE } from '../data/site';
     color: var(--malva-oscuro);
   }
 
-  /* mismo comportamiento que el CTA del hero: oscuro que se aclara al hover */
+  /* mismo comportamiento que el CTA del hero: oscuro que se aclara al hover.
+     El color va explícito porque `.header__nav > a` (texto oscuro del menú)
+     es más específico que `.boton--primario`. */
+  .header__nav > .nav__cta,
+  .header__nav > .nav__cta:hover {
+    color: #fff;
+  }
+
   .nav__cta {
     font-size: 0.8rem;
     padding: 0.7em 1.3em;

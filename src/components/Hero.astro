@@ -4,15 +4,13 @@ import Icono from './Icono.astro';
 import { SITE } from '../data/site';
 import img1 from '../assets/consultorio/hero/IMG-1.jpg';
 import img2 from '../assets/consultorio/hero/IMG-2.jpg';
-import img3 from '../assets/consultorio/hero/IMG-3.jpg';
-import img4 from '../assets/consultorio/hero/IMG-4.jpg';
 
 // encuadre propio por foto: la zona izquierda queda libre para el texto
+// (fotos 3 y 4 fuera a pedido del cliente, 2026-07-12; vuelve a crecer
+// cuando manden las fotos nuevas)
 const fotos = [
   { img: img1, alt: 'Consultorio de la Dra. Ana Laura Batalles', pos: '62% 42%' },
   { img: img2, alt: 'Sala de atención del consultorio', pos: '70% 45%' },
-  { img: img3, alt: 'Recepción del consultorio', pos: '60% 50%' },
-  { img: img4, alt: 'Sala de espera del consultorio', pos: '50% 55%' },
 ];
 ---
 
@@ -23,7 +21,8 @@ const fotos = [
         <Image
           src={foto.img}
           alt={foto.alt}
-          width={1800}
+          widths={[768, 1200, 1800, 2560, 3400]}
+          sizes="100vw"
           loading={i <= 1 ? 'eager' : 'lazy'}
           style={`object-position: ${foto.pos}`}
         />
