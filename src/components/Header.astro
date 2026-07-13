@@ -299,8 +299,10 @@ import { SITE } from '../data/site';
 
     .header__nav {
       display: none;
-      position: absolute;
-      top: 100%;
+      /* anclado al viewport, justo debajo del header (--menu-top la
+         calcula el script al abrir: header.getBoundingClientRect().bottom) */
+      position: fixed;
+      top: var(--menu-top, 86px);
       left: 0;
       right: 0;
       background: var(--crema);
@@ -316,7 +318,7 @@ import { SITE } from '../data/site';
       display: flex;
       animation: menu-abrir 0.2s ease;
       /* si el panel no entra en la pantalla, scrollea el panel */
-      max-height: calc(100dvh - 140px);
+      max-height: calc(100dvh - var(--menu-top, 86px));
       overflow-y: auto;
       overscroll-behavior: contain;
     }
@@ -389,11 +391,19 @@ import { SITE } from '../data/site';
   // se cierra con tap afuera, Escape o al elegir un link.
   // overflow:hidden frena rueda/teclado; el touchmove del velo frena el
   // gesto táctil (iOS ignora el overflow para touch).
+  const cabecera = document.querySelector('.header');
   const fijar = (abierto: boolean) => {
+    if (abierto && cabecera) {
+      // el panel es fixed: anclarlo al borde real del header en este momento
+      document.documentElement.style.setProperty(
+        '--menu-top',
+        `${cabecera.getBoundingClientRect().bottom}px`
+      );
+    }
     nav?.classList.toggle('abierto', abierto);
     scrim?.classList.toggle('visible', abierto);
     boton?.setAttribute('aria-expanded', String(abierto));
-    document.documentElement.style.overflow = abierto ? 'hidden' : '';
+    // solo body: tocar html en iOS puede des-stickear el header o saltar el scroll
     document.body.style.overflow = abierto ? 'hidden' : '';
   };
   scrim?.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
