@@ -36,6 +36,13 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Los saltos a anclas (#contacto, #tratamientos) deben aterrizar debajo
+   del header pegajoso, no escondidos atrás. El colchón extra cubre el
+   corrimiento por carga de fuentes al entrar con #ancla en la URL. */
+section[id] {
+  scroll-margin-top: 140px;
+}
+
 body {
   margin: 0;
   background: var(--crema);

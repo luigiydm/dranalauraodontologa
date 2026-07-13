@@ -163,6 +163,13 @@ const fotos = [
     transition: background 0.2s ease;
   }
 
+  /* área tocable extendida (el visual queda igual) */
+  .hero__flecha::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+  }
+
   .hero__flecha:hover {
     background: #fff;
   }
@@ -184,26 +191,35 @@ const fotos = [
 
   .hero__puntos {
     position: absolute;
-    bottom: 22px;
+    bottom: 12px;
     left: 50%;
     translate: -50% 0;
     z-index: 3;
     display: flex;
-    gap: 0.55rem;
   }
 
+  /* botón de 24px (objetivo táctil) con el punto visual de 8px adentro */
   .hero__punto {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .hero__punto::before {
+    content: '';
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    border: none;
     background: rgb(255 255 255 / 0.75);
-    cursor: pointer;
-    padding: 0;
     transition: background 0.2s ease;
   }
 
-  .hero__punto.activo {
+  .hero__punto.activo::before {
     background: var(--malva);
   }
 
@@ -259,7 +275,7 @@ const fotos = [
     }
 
     .hero__puntos {
-      bottom: 16px;
+      bottom: 6px;
     }
   }
 </style>
@@ -280,15 +296,25 @@ const fotos = [
       puntos[actual].classList.add('activo');
     };
 
+    // sin auto-avance para quien pidió menos movimiento (los controles
+    // manuales siguen funcionando)
+    const menosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     const pausar = () => {
       clearInterval(timer);
       timer = undefined;
     };
 
     const reanudar = () => {
-      if (timer) return;
+      if (timer || menosMovimiento) return;
       timer = setInterval(() => mostrar(actual + 1), 5000);
     };
+
+    // no rotar con la pestaña en segundo plano
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) pausar();
+      else reanudar();
+    });
 
     carrusel.querySelector('.hero__flecha--prev')?.addEventListener('click', () => {
       mostrar(actual - 1);

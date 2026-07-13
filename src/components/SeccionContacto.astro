@@ -196,6 +196,12 @@ const TURNSTILE_SITEKEY = import.meta.env.PUBLIC_TURNSTILE_SITEKEY;
     .contacto__mapa {
       min-height: 280px;
     }
+
+    /* con menos de 16px, iOS hace zoom automático al enfocar un campo */
+    .contacto__form input,
+    .contacto__form textarea {
+      font-size: 16px;
+    }
   }
 </style>
 
