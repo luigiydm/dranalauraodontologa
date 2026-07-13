@@ -17,13 +17,14 @@ const fotos = [
 <section class="hero" data-carrusel>
   {
     fotos.map((foto, i) => (
-      <div class:list={['hero__slide', { activo: i === 0 }]}>
+      <div class:list={['hero__slide', { activo: i === 0 }]} aria-hidden={i === 0 ? 'false' : 'true'}>
         <Image
           src={foto.img}
           alt={foto.alt}
           widths={[768, 1200, 1800, 2560, 3400]}
           sizes="100vw"
-          loading={i <= 1 ? 'eager' : 'lazy'}
+          loading={i === 0 ? 'eager' : 'lazy'}
+          fetchpriority={i === 0 ? 'high' : 'auto'}
           style={`object-position: ${foto.pos}`}
         />
       </div>
@@ -47,7 +48,12 @@ const fotos = [
   <button class="hero__flecha hero__flecha--next" aria-label="Foto siguiente">›</button>
   <div class="hero__puntos" role="tablist" aria-label="Fotos del consultorio">
     {fotos.map((_, i) => (
-      <button class:list={['hero__punto', { activo: i === 0 }]} aria-label={`Ver foto ${i + 1}`} data-indice={i} />
+      <button
+        class:list={['hero__punto', { activo: i === 0 }]}
+        aria-label={`Ver foto ${i + 1}`}
+        aria-current={i === 0 ? 'true' : 'false'}
+        data-indice={i}
+      />
     ))}
   </div>
 </section>
@@ -290,10 +296,14 @@ const fotos = [
 
     const mostrar = (i: number) => {
       slides[actual].classList.remove('activo');
+      slides[actual].setAttribute('aria-hidden', 'true');
       puntos[actual].classList.remove('activo');
+      puntos[actual].setAttribute('aria-current', 'false');
       actual = (i + slides.length) % slides.length;
       slides[actual].classList.add('activo');
+      slides[actual].setAttribute('aria-hidden', 'false');
       puntos[actual].classList.add('activo');
+      puntos[actual].setAttribute('aria-current', 'true');
     };
 
     // sin auto-avance para quien pidió menos movimiento (los controles
@@ -305,9 +315,10 @@ const fotos = [
       timer = undefined;
     };
 
+    const INTERVALO = 6500;
     const reanudar = () => {
       if (timer || menosMovimiento) return;
-      timer = setInterval(() => mostrar(actual + 1), 5000);
+      timer = setInterval(() => mostrar(actual + 1), INTERVALO);
     };
 
     // no rotar con la pestaña en segundo plano
