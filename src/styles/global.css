@@ -347,10 +347,12 @@ a {
   }
 }
 
-/* En mobile dejamos aire para la barra fija inferior y más cuerpo de texto */
+/* En mobile dejamos aire para la barra fija inferior y más cuerpo de texto.
+   La barra crece con env(safe-area-inset-bottom) en iPhone (indicador de
+   inicio): la reserva tiene que crecer igual o tapa el pie del footer. */
 @media (max-width: 760px) {
   body {
-    padding-bottom: 64px;
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
     font-size: 1.045rem;
     line-height: 1.7;
   }

@@ -63,6 +63,7 @@ import { SITE } from '../data/site';
     </nav>
   </div>
 </header>
+<div class="nav-scrim" aria-hidden="true"></div>
 
 <style>
   .barra-superior {
@@ -229,6 +230,10 @@ import { SITE } from '../data/site';
     color: var(--malva-oscuro);
   }
 
+  .nav-scrim {
+    display: none;
+  }
+
   /* Hamburguesa en marco redondeado, como el mockup */
   .header__hamburguesa {
     display: none;
@@ -310,6 +315,19 @@ import { SITE } from '../data/site';
     .header__nav.abierto {
       display: flex;
       animation: menu-abrir 0.2s ease;
+      /* si el panel no entra en la pantalla, scrollea el panel */
+      max-height: calc(100dvh - 140px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    /* velo modal sobre el contenido mientras el menú está abierto */
+    .nav-scrim.visible {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 40; /* debajo del header (50), encima del contenido */
+      background: rgb(68 58 51 / 0.35);
     }
 
     @keyframes menu-abrir {
@@ -365,14 +383,33 @@ import { SITE } from '../data/site';
 <script>
   const boton = document.querySelector('.header__hamburguesa');
   const nav = document.getElementById('nav-principal');
-  boton?.addEventListener('click', () => {
-    const abierto = nav?.classList.toggle('abierto');
-    boton.setAttribute('aria-expanded', String(Boolean(abierto)));
+  const scrim = document.querySelector('.nav-scrim');
+
+  // el menú abierto es una capa modal: velo, scroll del fondo bloqueado,
+  // se cierra con tap afuera, Escape o al elegir un link.
+  // overflow:hidden frena rueda/teclado; el touchmove del velo frena el
+  // gesto táctil (iOS ignora el overflow para touch).
+  const fijar = (abierto: boolean) => {
+    nav?.classList.toggle('abierto', abierto);
+    scrim?.classList.toggle('visible', abierto);
+    boton?.setAttribute('aria-expanded', String(abierto));
+    document.documentElement.style.overflow = abierto ? 'hidden' : '';
+    document.body.style.overflow = abierto ? 'hidden' : '';
+  };
+  scrim?.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+  scrim?.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
+  const estaAbierto = () => Boolean(nav?.classList.contains('abierto'));
+
+  boton?.addEventListener('click', () => fijar(!estaAbierto()));
+  scrim?.addEventListener('click', () => fijar(false));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && estaAbierto()) fijar(false);
   });
   nav?.addEventListener('click', (e) => {
-    if ((e.target as HTMLElement).tagName === 'A') {
-      nav.classList.remove('abierto');
-      boton?.setAttribute('aria-expanded', 'false');
-    }
+    if ((e.target as HTMLElement).tagName === 'A') fijar(false);
+  });
+  // si se pasa a viewport de escritorio con el menú abierto, liberar todo
+  window.matchMedia('(min-width: 901px)').addEventListener('change', (e) => {
+    if (e.matches) fijar(false);
   });
 </script>
