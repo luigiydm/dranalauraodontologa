@@ -23,8 +23,44 @@ import { SITE } from '../data/site';
 </nav>
 
 <style>
-  .barra-movil {
-    display: none;
+  /* En desktop la barra existe como banda estática de cierre de página
+     (así aparece en la guía 3): no flota ni roba pantalla, y el CTA
+     permanente ya vive en el header */
+  @media (min-width: 761px) {
+    .barra-movil {
+      display: grid;
+      grid-template-columns: repeat(4, auto);
+      justify-content: center;
+      background: var(--malva);
+      padding: 1.05rem 0;
+    }
+
+    .barra-movil a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: #fff;
+      text-decoration: none;
+      font-family: var(--fuente-titulos);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding-inline: clamp(1.2rem, 3vw, 2.6rem);
+    }
+
+    .barra-movil a:hover {
+      color: rgb(255 255 255 / 0.8);
+    }
+
+    .barra-movil a + a {
+      border-left: 1px solid rgb(255 255 255 / 0.35);
+    }
+
+    .barra-movil :global(svg) {
+      width: 1.15rem;
+      height: 1.15rem;
+    }
   }
 
   @media (max-width: 760px) {

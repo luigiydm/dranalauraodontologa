@@ -188,7 +188,7 @@ const jsonLd = {
   <section class="seccion seccion--beige">
     <div class="contenedor">
       <h2 class="titulo-seccion">Nuestra propuesta de valor</h2>
-      <div class="grilla-tarjetas grilla-tarjetas--3">
+      <div class="grilla-tarjetas grilla-tarjetas--3 grilla-tarjetas--contenido">
         {
           propuestaDeValor.map((item) => (
             <div class="tarjeta">
@@ -214,7 +214,7 @@ const jsonLd = {
         prioriza la salud, la función y la estética. Utilizamos técnicas que permiten preservar
         la mayor cantidad posible de estructura dental.
       </p>
-      <div class="grilla-tarjetas grilla-tarjetas--3">
+      <div class="grilla-tarjetas grilla-tarjetas--3 grilla-tarjetas--accesos">
         {
           serviciosHome.map((s) => (
             <a class:list={['tarjeta', 'tarjeta--enlace', `tarjeta--${s.tono}`]} href={s.href}>
@@ -256,7 +256,7 @@ const jsonLd = {
         puede sentirse cómodo y acompañado durante todo el proceso. Nos tomamos el tiempo
         necesario para escuchar, evaluar y explicar cada tratamiento con claridad.
       </p>
-      <div class="grilla-tarjetas grilla-tarjetas--4">
+      <div class="grilla-tarjetas grilla-tarjetas--4 grilla-tarjetas--contenido">
         {
           experiencia.map((item) => (
             <div class="tarjeta">
@@ -430,22 +430,25 @@ const jsonLd = {
       margin-inline: auto;
     }
 
-    /* dos columnas también en teléfonos: evita el "túnel" de tarjetas.
-       El gap se achica para que respiren en 360-420px de ancho */
     .grilla-tarjetas {
       gap: 0.9rem;
     }
 
-    .grilla-tarjetas--4,
-    .grilla-tarjetas--3 {
-      grid-template-columns: repeat(2, 1fr);
+    /* tarjetas con párrafos largos: una columna — en dos se convierten
+       en túneles de texto de 3 palabras por línea */
+    .grilla-tarjetas--contenido {
+      grid-template-columns: 1fr;
+    }
+
+    /* accesos breves (tratamientos): dos columnas sí funcionan */
+    .grilla-tarjetas--accesos {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   /* una sola columna únicamente en pantallas realmente angostas */
-  @media (max-width: 359px) {
-    .grilla-tarjetas--4,
-    .grilla-tarjetas--3 {
+  @media (max-width: 380px) {
+    .grilla-tarjetas--accesos {
       grid-template-columns: 1fr;
     }
   }
