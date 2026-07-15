@@ -325,13 +325,12 @@ const jsonLd = {
     align-items: center;
   }
 
-  /* Retrato con arco (techo redondeado, base recta): más editorial que
-     el círculo de avatar, y rima con las curvas del resto del sitio */
+  /* Retrato circular, como la referencia del cliente (guía 3) */
   .doctora__foto {
     position: relative;
-    border-radius: 999px 999px var(--radio) var(--radio);
+    border-radius: 50%;
     overflow: hidden;
-    aspect-ratio: 4 / 4.6;
+    aspect-ratio: 1 / 1;
     box-shadow: var(--sombra);
   }
 
