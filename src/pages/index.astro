@@ -5,29 +5,40 @@ import Hero from '../components/Hero.astro';
 import Icono from '../components/Icono.astro';
 import SeccionContacto from '../components/SeccionContacto.astro';
 import { SITE } from '../data/site';
-import { tratamientos } from '../data/tratamientos';
+
 import fotoAna from '../assets/consultorio/foto-ana_Mesa-de-trabajo-1-1.jpg';
 
+// Textos de la propuesta de valor ajustados por el cliente (2026-07-13)
 const propuestaDeValor = [
   {
-    icono: 'anillos',
-    titulo: 'Enfoque integral',
-    texto: 'Estética, salud y función trabajadas en conjunto.',
+    icono: 'persona',
+    titulo: 'Atención personalizada',
+    texto:
+      'Cada paciente es único. Escuchamos tus necesidades, realizamos un diagnóstico integral y planificamos cada tratamiento respetando tus tiempos, tus expectativas y el horario de atención.',
   },
   {
     icono: 'hoja',
-    titulo: 'Odontología conservadora',
-    texto: 'Priorizamos preservar cada pieza dental.',
+    titulo: 'Preservación dental',
+    texto:
+      'Nuestra prioridad es conservar la mayor cantidad posible de estructura dentaria sana. Mediante planificación digital y un enfoque mínimamente invasivo, buscamos rehabilitar la función y la estética preservando las piezas que aún pueden conservarse.',
   },
   {
-    icono: 'persona',
-    titulo: 'Tratamientos personalizados',
-    texto: 'Cada diagnóstico y tratamiento es único.',
+    icono: 'lupa',
+    titulo: 'Precisión digital',
+    texto:
+      'El uso de escáner intraoral, diseño digital y cirugía guiada nos permite diagnosticar con mayor precisión, planificar tratamientos personalizados y brindar una experiencia más cómoda para el paciente.',
+  },
+  {
+    icono: 'anillos',
+    titulo: 'Formación y actualización continua',
+    texto:
+      'La odontología evoluciona constantemente. La formación permanente y la actividad docente nos permiten ofrecer tratamientos basados en evidencia científica, incorporando herramientas y técnicas de última generación.',
   },
   {
     icono: 'sonrisa',
     titulo: 'Resultados naturales',
-    texto: 'Buscamos mejorar sin alterar la identidad de tu sonrisa.',
+    texto:
+      'Buscamos sonrisas armónicas y saludables, respetando la identidad de cada persona. Nuestro objetivo es realzar la estética sin perder la naturalidad.',
   },
 ];
 
@@ -36,7 +47,7 @@ const experiencia = [
     icono: 'persona',
     titulo: 'Atención personalizada',
     texto:
-      'Cada paciente es único. Dedicamos el tiempo necesario para comprender cada caso y definir el tratamiento más adecuado.',
+      'Cada paciente es único. Escuchamos tus necesidades, realizamos un diagnóstico integral y planificamos cada tratamiento respetando tus tiempos, tus expectativas y el horario de atención, para que tu experiencia sea tan cuidada como tu tratamiento.',
   },
   {
     icono: 'lupa',
@@ -55,6 +66,54 @@ const experiencia = [
     titulo: 'Seguimiento cercano',
     texto:
       'Acompañamos cada etapa del tratamiento, asegurando evolución y resultados en el tiempo.',
+  },
+];
+
+// Capa de presentación de la home (6 accesos como la guía de estilo 3).
+// No altera la arquitectura clínica de tratamientos.ts: cada acceso enlaza
+// a la categoría o ancla real. Resúmenes tomados del mockup del cliente.
+const serviciosHome = [
+  {
+    icono: 'sonrisa',
+    titulo: 'Estética dental',
+    resumen: 'Armonía, forma y color para realzar tu sonrisa.',
+    href: '/tratamientos/estetica-dental',
+    tono: 'beige',
+  },
+  {
+    icono: 'implante',
+    titulo: 'Implantes',
+    resumen: 'Reemplazo de piezas dentarias con máxima seguridad y naturalidad.',
+    href: '/tratamientos/implantes-y-protesis',
+    tono: 'crema',
+  },
+  {
+    icono: 'bracket',
+    titulo: 'Ortodoncia',
+    resumen: 'Alineamos tu sonrisa con tecnología avanzada y estética.',
+    href: '/tratamientos/ortodoncia',
+    tono: 'rosa',
+  },
+  {
+    icono: 'arco',
+    titulo: 'Restauradora',
+    resumen: 'Recuperamos la función y estética de tus dientes con materiales de alta calidad.',
+    href: '/tratamientos/odontologia-general',
+    tono: 'crema',
+  },
+  {
+    icono: 'destello',
+    titulo: 'Blanqueamiento',
+    resumen: 'Iluminamos tu sonrisa de manera segura y efectiva.',
+    href: '/tratamientos/estetica-dental#blanqueamiento-dental',
+    tono: 'beige',
+  },
+  {
+    icono: 'anillos',
+    titulo: 'Rehabilitación oral',
+    resumen: 'Soluciones integrales para recuperar tu salud y calidad de vida.',
+    href: '/tratamientos/rehabilitacion-oral',
+    tono: 'taupe',
   },
 ];
 
@@ -91,9 +150,9 @@ const jsonLd = {
   <section class="seccion seccion--beige filosofia">
     <div class="contenedor">
       <p class="filosofia__texto">
-        “Realizamos tratamientos personalizados que buscan una sonrisa armónica y natural,
-        cuidando la salud, la función y la estructura dental, y priorizando la conservación
-        de cada pieza siempre que sea posible”
+        “Realizamos tratamientos personalizados con tecnología digital para lograr una sonrisa
+        armónica y natural, cuidando la salud, la función y la estructura dental con un enfoque
+        basado en la preservación de cada pieza”
       </p>
     </div>
   </section>
@@ -115,10 +174,11 @@ const jsonLd = {
         </p>
         <p>Nuestro objetivo es lograr resultados naturales, duraderos y en armonía con cada paciente.</p>
         <p>
-          La Dra. Ana Laura Batalles cuenta con una sólida trayectoria en el ámbito profesional
-          y académico, con experiencia en rehabilitaciones orales de alta complejidad y una
-          participación constante en actividades de actualización, tanto como asistente como
-          disertante.
+          La Dra. Ana Laura Batalles cuenta con una sólida trayectoria profesional y académica.
+          Su experiencia en rehabilitaciones orales de alta complejidad, junto con su actividad
+          docente universitaria, su actualización permanente y su participación activa en cursos
+          y congresos como asistente y disertante, reflejan su compromiso permanente con la
+          excelencia, la innovación y una odontología basada en la evidencia científica.
         </p>
       </div>
     </div>
@@ -128,7 +188,7 @@ const jsonLd = {
   <section class="seccion seccion--beige">
     <div class="contenedor">
       <h2 class="titulo-seccion">Nuestra propuesta de valor</h2>
-      <div class="grilla-tarjetas grilla-tarjetas--4">
+      <div class="grilla-tarjetas grilla-tarjetas--3">
         {
           propuestaDeValor.map((item) => (
             <div class="tarjeta">
@@ -156,14 +216,14 @@ const jsonLd = {
       </p>
       <div class="grilla-tarjetas grilla-tarjetas--3">
         {
-          tratamientos.map((t) => (
-            <a class="tarjeta tarjeta--enlace" href={`/tratamientos/${t.slug}`}>
+          serviciosHome.map((s) => (
+            <a class:list={['tarjeta', 'tarjeta--enlace', `tarjeta--${s.tono}`]} href={s.href}>
               <div class="tarjeta__icono">
-                <Icono nombre={t.icono} />
+                <Icono nombre={s.icono} />
               </div>
               <div class="tarjeta__punto" />
-              <h3>{t.titulo}</h3>
-              <p>{t.resumen}</p>
+              <h3>{s.titulo}</h3>
+              <p>{s.resumen}</p>
               <span class="tarjeta__mas">Conocer más</span>
             </a>
           ))
@@ -265,11 +325,13 @@ const jsonLd = {
     align-items: center;
   }
 
+  /* Retrato con arco (techo redondeado, base recta): más editorial que
+     el círculo de avatar, y rima con las curvas del resto del sitio */
   .doctora__foto {
     position: relative;
-    border-radius: 50%;
+    border-radius: 999px 999px var(--radio) var(--radio);
     overflow: hidden;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 4 / 4.6;
     box-shadow: var(--sombra);
   }
 
@@ -369,6 +431,20 @@ const jsonLd = {
       margin-inline: auto;
     }
 
+    /* dos columnas también en teléfonos: evita el "túnel" de tarjetas.
+       El gap se achica para que respiren en 360-420px de ancho */
+    .grilla-tarjetas {
+      gap: 0.9rem;
+    }
+
+    .grilla-tarjetas--4,
+    .grilla-tarjetas--3 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* una sola columna únicamente en pantallas realmente angostas */
+  @media (max-width: 359px) {
     .grilla-tarjetas--4,
     .grilla-tarjetas--3 {
       grid-template-columns: 1fr;

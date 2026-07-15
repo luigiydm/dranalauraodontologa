@@ -269,6 +269,7 @@ export const tratamientos: Tratamiento[] = [
           'Cada caso se analiza de manera detallada, a partir de un diagnóstico preciso y una planificación personalizada.',
           'El tratamiento puede integrar distintas áreas de la odontología —como implantes, prótesis, restauraciones u ortodoncia— según las necesidades de cada paciente.',
           'El objetivo es lograr una solución integral, funcional y estética, con resultados naturales y duraderos, evitando intervenciones innecesarias y priorizando la conservación de la estructura dental siempre que sea posible.',
+          'En pacientes con desgaste dental o bruxismo utilizamos planificación digital para rehabilitar la boca preservando al máximo la estructura dentaria, evitando desgastes innecesarios siempre que sea posible.',
         ],
       },
       {
@@ -321,7 +322,7 @@ export const tratamientos: Tratamiento[] = [
         titulo: 'Proceso',
         parrafos: [
           'El tratamiento comienza con estudios diagnósticos y planificación detallada.',
-          'La colocación del implante se realiza mediante un procedimiento controlado, seguido de un período de integración con el hueso. Una vez finalizada esta etapa, se coloca la prótesis definitiva, diseñada a medida para cada paciente.',
+          'Realizamos cirugía guiada mediante tomografía, escaneo intraoral y planificación digital, lo que permite colocar los implantes con mayor precisión, reducir el trauma quirúrgico y, en muchos casos, minimizar o incluso evitar la necesidad de puntos de sutura.',
           'En algunos casos, el tratamiento puede realizarse en etapas o combinarse con otras técnicas según las necesidades específicas.',
         ],
       },
