@@ -44,7 +44,17 @@ const otros = tratamientos.filter((t) => t.slug !== tratamiento.slug);
 
       {
         tratamiento.subtratamientos?.map((sub) => (
-          <article class="subtratamiento">
+          /* el id permite anclar accesos directos desde la home
+             (p. ej. /tratamientos/estetica-dental#blanqueamiento-dental) */
+          <article
+            class="subtratamiento"
+            id={sub.titulo
+              .toLowerCase()
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/(^-|-$)/g, '')}
+          >
             <h2>{sub.titulo}</h2>
             {sub.bloques.map((bloque: Bloque) => (
               <div class="bloque">

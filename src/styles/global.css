@@ -258,6 +258,21 @@ a {
   background: var(--taupe);
 }
 
+/* Tonos explícitos por tarjeta (ganan al nth-child: el color no debe
+   cambiar si se reordenan los elementos) */
+.tarjeta.tarjeta--crema {
+  background: var(--crema);
+}
+.tarjeta.tarjeta--beige {
+  background: var(--beige);
+}
+.tarjeta.tarjeta--rosa {
+  background: var(--rosa);
+}
+.tarjeta.tarjeta--taupe {
+  background: var(--taupe);
+}
+
 /* ---- foto con filtro cálido (pedido del cliente) ----
    Viraje a la paleta beige/malva de la marca, como las referencias visuales. */
 
