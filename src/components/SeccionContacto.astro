@@ -34,6 +34,17 @@ const TURNSTILE_SITEKEY = import.meta.env.PUBLIC_TURNSTILE_SITEKEY;
             </a>
           </li>
           <li>
+            <Icono nombre="reloj" />
+            <div class="contacto__horarios">
+              <strong>Horarios de atención</strong>
+              {SITE.horarios.map((h) => (
+                <span>
+                  {h.dias}: {h.horas}
+                </span>
+              ))}
+            </div>
+          </li>
+          <li>
             <Icono nombre="instagram" />
             <a href={SITE.instagram} target="_blank" rel="noopener">@draanalaurabatalles</a>
           </li>
@@ -120,6 +131,18 @@ const TURNSTILE_SITEKEY = import.meta.env.PUBLIC_TURNSTILE_SITEKEY;
   .contacto__datos a:hover {
     color: var(--malva-oscuro);
     text-decoration: underline;
+  }
+
+  .contacto__horarios {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .contacto__horarios strong {
+    font-family: var(--fuente-titulos);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.15rem;
   }
 
   .contacto__form {

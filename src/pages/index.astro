@@ -39,6 +39,10 @@ const jsonLd = {
     latitude: SITE.geo.lat,
     longitude: SITE.geo.lng,
   },
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday'], opens: '08:00', closes: '16:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Wednesday', 'Friday'], opens: '08:00', closes: '15:00' },
+  ],
   sameAs: [SITE.facebook, SITE.instagram],
 };
 ---
@@ -68,8 +72,8 @@ const jsonLd = {
 
       <div class="forma__grid">
         <div class="forma__foto">
-          <Image src={anaPanel} alt="La Dra. Ana Laura Batalles en su consultorio" width={900} class="foto-calida" />
-          <div class="tinte-marca" aria-hidden="true"></div>
+          <!-- edición propia de Luis, sin filtro: la foto ya viene corregida -->
+          <Image src={anaPanel} alt="La Dra. Ana Laura Batalles en su consultorio" width={900} />
         </div>
         <div class="forma__lista">
           <h3>Nuestra filosofía de trabajo</h3>
