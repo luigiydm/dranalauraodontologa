@@ -5,116 +5,18 @@ import Hero from '../components/Hero.astro';
 import Icono from '../components/Icono.astro';
 import SeccionContacto from '../components/SeccionContacto.astro';
 import { SITE } from '../data/site';
+import { tratamientos } from '../data/tratamientos';
+import anaPanel from '../assets/consultorio/ana-laura-panel.jpg';
 
-import fotoAna from '../assets/consultorio/foto-ana_Mesa-de-trabajo-1-1.jpg';
-
-// Textos de la propuesta de valor ajustados por el cliente (2026-07-13)
-const propuestaDeValor = [
-  {
-    icono: 'persona',
-    titulo: 'Atención personalizada',
-    texto:
-      'Cada paciente es único. Escuchamos tus necesidades, realizamos un diagnóstico integral y planificamos cada tratamiento respetando tus tiempos, tus expectativas y el horario de atención.',
-  },
-  {
-    icono: 'hoja',
-    titulo: 'Preservación dental',
-    texto:
-      'Nuestra prioridad es conservar la mayor cantidad posible de estructura dentaria sana. Mediante planificación digital y un enfoque mínimamente invasivo, buscamos rehabilitar la función y la estética preservando las piezas que aún pueden conservarse.',
-  },
-  {
-    icono: 'lupa',
-    titulo: 'Precisión digital',
-    texto:
-      'El uso de escáner intraoral, diseño digital y cirugía guiada nos permite diagnosticar con mayor precisión, planificar tratamientos personalizados y brindar una experiencia más cómoda para el paciente.',
-  },
-  {
-    icono: 'anillos',
-    titulo: 'Formación y actualización continua',
-    texto:
-      'La odontología evoluciona constantemente. La formación permanente y la actividad docente nos permiten ofrecer tratamientos basados en evidencia científica, incorporando herramientas y técnicas de última generación.',
-  },
-  {
-    icono: 'sonrisa',
-    titulo: 'Resultados naturales',
-    texto:
-      'Buscamos sonrisas armónicas y saludables, respetando la identidad de cada persona. Nuestro objetivo es realzar la estética sin perder la naturalidad.',
-  },
-];
-
-const experiencia = [
-  {
-    icono: 'persona',
-    titulo: 'Atención personalizada',
-    texto:
-      'Cada paciente es único. Escuchamos tus necesidades, realizamos un diagnóstico integral y planificamos cada tratamiento respetando tus tiempos, tus expectativas y el horario de atención, para que tu experiencia sea tan cuidada como tu tratamiento.',
-  },
-  {
-    icono: 'lupa',
-    titulo: 'Diagnóstico claro',
-    texto:
-      'Explicamos cada situación y las alternativas disponibles, para que puedas tomar decisiones con tranquilidad.',
-  },
-  {
-    icono: 'reloj',
-    titulo: 'Tratamientos sin apuro',
-    texto:
-      'Respetamos los tiempos de cada proceso, priorizando resultados duraderos por sobre soluciones rápidas.',
-  },
-  {
-    icono: 'corazon',
-    titulo: 'Seguimiento cercano',
-    texto:
-      'Acompañamos cada etapa del tratamiento, asegurando evolución y resultados en el tiempo.',
-  },
-];
-
-// Capa de presentación de la home (6 accesos como la guía de estilo 3).
-// No altera la arquitectura clínica de tratamientos.ts: cada acceso enlaza
-// a la categoría o ancla real. Resúmenes tomados del mockup del cliente.
-const serviciosHome = [
-  {
-    icono: 'sonrisa',
-    titulo: 'Estética dental',
-    resumen: 'Armonía, forma y color para realzar tu sonrisa.',
-    href: '/tratamientos/estetica-dental',
-    tono: 'beige',
-  },
-  {
-    icono: 'implante',
-    titulo: 'Implantes',
-    resumen: 'Reemplazo de piezas dentarias con máxima seguridad y naturalidad.',
-    href: '/tratamientos/implantes-y-protesis',
-    tono: 'crema',
-  },
-  {
-    icono: 'bracket',
-    titulo: 'Ortodoncia',
-    resumen: 'Alineamos tu sonrisa con tecnología avanzada y estética.',
-    href: '/tratamientos/ortodoncia',
-    tono: 'rosa',
-  },
-  {
-    icono: 'arco',
-    titulo: 'Restauradora',
-    resumen: 'Recuperamos la función y estética de tus dientes con materiales de alta calidad.',
-    href: '/tratamientos/odontologia-general',
-    tono: 'crema',
-  },
-  {
-    icono: 'destello',
-    titulo: 'Blanqueamiento',
-    resumen: 'Iluminamos tu sonrisa de manera segura y efectiva.',
-    href: '/tratamientos/estetica-dental#blanqueamiento-dental',
-    tono: 'beige',
-  },
-  {
-    icono: 'anillos',
-    titulo: 'Rehabilitación oral',
-    resumen: 'Soluciones integrales para recuperar tu salud y calidad de vida.',
-    href: '/tratamientos/rehabilitacion-oral',
-    tono: 'taupe',
-  },
+// "Nuestra filosofía de trabajo" — checklist del docx v4 (2026-07-15)
+const filosofia = [
+  'Diagnóstico preciso',
+  'Planificación personalizada',
+  'Preservación dental',
+  'Tecnología digital',
+  'Actualización permanente',
+  'Atención puntual',
+  'Seguimiento cercano',
 ];
 
 const jsonLd = {
@@ -146,62 +48,68 @@ const jsonLd = {
 
   <Hero />
 
-  <!-- Filosofía de trabajo -->
-  <section class="seccion seccion--beige filosofia">
+  <!-- Nuestra forma de trabajar (docx v4) -->
+  <section class="seccion seccion--beige forma">
     <div class="contenedor">
-      <p class="filosofia__texto">
-        “Realizamos tratamientos personalizados con tecnología digital para lograr una sonrisa
-        armónica y natural, cuidando la salud, la función y la estructura dental con un enfoque
-        basado en la preservación de cada pieza”
-      </p>
+      <h2 class="titulo-seccion">Nuestra forma de trabajar</h2>
+      <div class="bajada forma__bajada">
+        <p>
+          Antes de indicar un tratamiento, creemos que hay una decisión mucho más importante:
+          definir cuál es realmente la mejor alternativa para cada paciente.
+        </p>
+        <p>
+          Por eso cada caso comienza con un diagnóstico preciso, una planificación personalizada
+          y una evaluación cuidadosa de todas las opciones disponibles. Nuestro objetivo no es
+          indicar más tratamientos, sino indicar el tratamiento correcto, priorizando siempre la
+          preservación de la salud, la función y la estructura dental para obtener resultados
+          más naturales, predecibles y duraderos.
+        </p>
+      </div>
+
+      <div class="forma__grid">
+        <div class="forma__foto">
+          <Image src={anaPanel} alt="La Dra. Ana Laura Batalles en su consultorio" width={900} class="foto-calida" />
+          <div class="tinte-marca" aria-hidden="true"></div>
+        </div>
+        <div class="forma__lista">
+          <h3>Nuestra filosofía de trabajo</h3>
+          <ul>
+            {filosofia.map((item) => (
+              <li>
+                <Icono nombre="destello" />
+                {item}
+              </li>
+            ))}
+          </ul>
+          <p class="forma__cierre">
+            …porque entendemos que detrás de cada tratamiento hay una persona, no solamente una
+            sonrisa.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Dra. Ana Laura Batalles -->
+  <!-- Dra. Ana Laura Batalles (docx v4, sin foto: la foto vive arriba) -->
   <section class="seccion doctora">
-    <div class="contenedor doctora__grid">
-      <div class="doctora__foto">
-        <Image src={fotoAna} alt="Dra. Ana Laura Batalles" width={520} class="foto-calida" />
-        <div class="tinte-marca" aria-hidden="true"></div>
-      </div>
-      <div>
-        <h2>Un enfoque profesional centrado en cada paciente</h2>
-        <p>
-          Abordamos la odontología desde un enfoque que respeta los tiempos, la biología y la
-          identidad de cada persona. Cada tratamiento comienza con un diagnóstico cuidadoso y
-          una planificación personalizada, buscando siempre el equilibrio entre estética,
-          salud y función.
-        </p>
-        <p>Nuestro objetivo es lograr resultados naturales, duraderos y en armonía con cada paciente.</p>
-        <p>
-          La Dra. Ana Laura Batalles cuenta con una sólida trayectoria profesional y académica.
-          Su experiencia en rehabilitaciones orales de alta complejidad, junto con su actividad
-          docente universitaria, su actualización permanente y su participación activa en cursos
-          y congresos como asistente y disertante, reflejan su compromiso permanente con la
-          excelencia, la innovación y una odontología basada en la evidencia científica.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Propuesta de valor -->
-  <section class="seccion seccion--beige">
-    <div class="contenedor">
-      <h2 class="titulo-seccion">Nuestra propuesta de valor</h2>
-      <div class="grilla-tarjetas grilla-tarjetas--3 grilla-tarjetas--contenido">
-        {
-          propuestaDeValor.map((item) => (
-            <div class="tarjeta">
-              <div class="tarjeta__icono">
-                <Icono nombre={item.icono} />
-              </div>
-              <div class="tarjeta__punto" />
-              <h3>{item.titulo}</h3>
-              <p>{item.texto}</p>
-            </div>
-          ))
-        }
-      </div>
+    <div class="contenedor doctora__texto">
+      <h2 class="titulo-seccion">Ana Laura Batalles</h2>
+      <p>
+        La Dra. Ana Laura Batalles cuenta con una sólida trayectoria profesional y académica,
+        combinando su práctica clínica con la actividad docente universitaria y una
+        actualización permanente.
+      </p>
+      <p>
+        Su experiencia en rehabilitaciones orales de alta complejidad, junto con su
+        participación activa como asistente y disertante en cursos y congresos, respaldan una
+        práctica odontológica basada en la evidencia científica, la planificación personalizada
+        y la preservación de la estructura dental.
+      </p>
+      <p>
+        La actividad docente y el contacto permanente con los avances científicos le permiten
+        incorporar nuevas técnicas y herramientas de manera crítica y fundamentada,
+        seleccionando en cada caso aquellas que realmente aportan un beneficio para el paciente.
+      </p>
     </div>
   </section>
 
@@ -210,20 +118,20 @@ const jsonLd = {
     <div class="contenedor">
       <h2 class="titulo-seccion">Tratamientos</h2>
       <p class="bajada">
-        Ofrecemos tratamientos adaptados a cada necesidad, con un enfoque personalizado que
-        prioriza la salud, la función y la estética. Utilizamos técnicas que permiten preservar
-        la mayor cantidad posible de estructura dental.
+        “Cada tratamiento es el resultado de un diagnóstico preciso y una planificación
+        personalizada, priorizando siempre la salud, la función y la preservación de la
+        estructura dental.”
       </p>
       <div class="grilla-tarjetas grilla-tarjetas--3 grilla-tarjetas--accesos">
         {
-          serviciosHome.map((s) => (
-            <a class:list={['tarjeta', 'tarjeta--enlace', `tarjeta--${s.tono}`]} href={s.href}>
+          tratamientos.map((t) => (
+            <a class="tarjeta tarjeta--enlace" href={`/tratamientos/${t.slug}`}>
               <div class="tarjeta__icono">
-                <Icono nombre={s.icono} />
+                <Icono nombre={t.icono} />
               </div>
               <div class="tarjeta__punto" />
-              <h3>{s.titulo}</h3>
-              <p>{s.resumen}</p>
+              <h3>{t.titulo}</h3>
+              <p>{t.resumen}</p>
               <span class="tarjeta__mas">Conocer más</span>
             </a>
           ))
@@ -232,70 +140,14 @@ const jsonLd = {
     </div>
   </section>
 
-  <!-- Diferencial -->
-  <section class="seccion seccion--malva diferencial">
-    <div class="contenedor">
-      <h2 class="titulo-seccion">Una forma distinta de abordar la estética dental</h2>
-      <div class="diferencial__texto">
-        <p>No se trata solo de mejorar la estética, sino de hacerlo respetando la salud y la función.</p>
-        <p>
-          Indicamos cada tratamiento a partir de un diagnóstico preciso, priorizando siempre la
-          opción más conservadora y adecuada para cada paciente.
-        </p>
-        <p>Buscamos resultados naturales, armónicos y duraderos, evitando intervenciones innecesarias.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Experiencia del paciente -->
-  <section class="seccion">
-    <div class="contenedor">
-      <h2 class="titulo-seccion">Un espacio pensado para cada paciente</h2>
-      <p class="bajada">
-        Brindamos una atención cercana y personalizada, en un entorno cuidado donde cada paciente
-        puede sentirse cómodo y acompañado durante todo el proceso. Nos tomamos el tiempo
-        necesario para escuchar, evaluar y explicar cada tratamiento con claridad.
-      </p>
-      <div class="grilla-tarjetas grilla-tarjetas--4 grilla-tarjetas--contenido">
-        {
-          experiencia.map((item) => (
-            <div class="tarjeta">
-              <div class="tarjeta__icono">
-                <Icono nombre={item.icono} />
-              </div>
-              <div class="tarjeta__punto" />
-              <h3>{item.titulo}</h3>
-              <p>{item.texto}</p>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- Bioseguridad -->
-  <section class="seccion seccion--beige bioseguridad">
-    <div class="contenedor">
-      <h2 class="titulo-seccion">Bioseguridad</h2>
-      <div class="bioseguridad__texto">
-        <p>La bioseguridad es muy importante para usted y para nosotros.</p>
-        <p>Mantener los ambientes lo más asépticos posible es una tarea que realizamos día a día.</p>
-        <p>
-          Contamos con recolección de residuos patogénicos, limpieza continua de las áreas
-          utilizadas entre paciente y paciente, instrumental esterilizado en autoclave, material
-          descartable para cada paciente que ingresa a nuestros consultorios, paredes y aberturas
-          plomadas para protección contra RX y estrictas normas de bioseguridad basándonos en los
-          reglamentos internacionales dispuestos.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA final -->
+  <!-- CTA final (docx v4) -->
   <section class="seccion cta-final">
     <div class="contenedor">
-      <h2>Agendá tu consulta</h2>
-      <p>Evaluamos tu caso de forma personalizada para definir el tratamiento más adecuado para vos.</p>
+      <h2>Agendá tu primer consulta</h2>
+      <p>
+        “Cada tratamiento comienza con un diagnóstico preciso y una planificación personalizada.
+        Agendá tu primer consulta para evaluar tu caso y definir la mejor alternativa para vos.”
+      </p>
       <a href={SITE.whatsappTurno} target="_blank" rel="noopener" class="boton boton--primario" data-evento="whatsapp">
         <Icono nombre="whatsapp" />
         Solicitar turno
@@ -307,37 +159,75 @@ const jsonLd = {
 </Base>
 
 <style>
-  .filosofia__texto {
-    max-width: 52rem;
-    margin: 0 auto;
-    text-align: center;
-    font-family: var(--fuente-titulos);
-    font-size: clamp(1.1rem, 2.2vw, 1.4rem);
-    font-weight: 400;
-    color: var(--tinta-suave);
-    line-height: 1.6;
+  /* ---- Nuestra forma de trabajar: foto + checklist de filosofía ---- */
+  .forma__bajada p {
+    margin-bottom: 1em;
   }
 
-  .doctora__grid {
+  .forma__grid {
     display: grid;
-    grid-template-columns: minmax(240px, 340px) 1fr;
-    gap: clamp(2rem, 5vw, 4rem);
+    grid-template-columns: minmax(260px, 380px) 1fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
     align-items: center;
+    max-width: 60rem;
+    margin-inline: auto;
   }
 
-  /* Retrato circular, como la referencia del cliente (guía 3) */
-  .doctora__foto {
+  .forma__foto {
     position: relative;
-    border-radius: 50%;
+    border-radius: var(--radio-grande, 24px);
     overflow: hidden;
-    aspect-ratio: 1 / 1;
     box-shadow: var(--sombra);
   }
 
-  .doctora__foto img {
+  .forma__foto img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    display: block;
+  }
+
+  .forma__lista h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+  }
+
+  .forma__lista ul {
+    list-style: none;
+    margin: 0 0 1.4rem;
+    padding: 0;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .forma__lista li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.02rem;
+  }
+
+  .forma__lista li :global(svg) {
+    width: 1.05rem;
+    height: 1.05rem;
+    flex: none;
+    color: var(--malva-oscuro);
+  }
+
+  .forma__cierre {
+    font-style: italic;
+    color: var(--tinta-suave);
+    margin: 0;
+  }
+
+  /* ---- Ana Laura Batalles: texto centrado, sin foto ---- */
+  .doctora__texto {
+    max-width: 50rem;
+  }
+
+  .doctora__texto p {
+    color: var(--tinta-suave);
   }
 
   .grilla-tarjetas {
@@ -383,20 +273,6 @@ const jsonLd = {
     padding-bottom: 2px;
   }
 
-  .diferencial__texto {
-    max-width: 46rem;
-    margin: 0 auto;
-    text-align: center;
-    color: rgb(255 255 255 / 0.92);
-  }
-
-  .bioseguridad__texto {
-    max-width: 50rem;
-    margin: 0 auto;
-    text-align: center;
-    color: var(--tinta-suave);
-  }
-
   .cta-final .contenedor {
     text-align: center;
   }
@@ -420,16 +296,18 @@ const jsonLd = {
     }
   }
 
-  @media (max-width: 640px) {
-    .doctora__grid {
+  @media (max-width: 700px) {
+    .forma__grid {
       grid-template-columns: 1fr;
     }
 
-    .doctora__foto {
-      max-width: 300px;
+    .forma__foto {
+      max-width: 340px;
       margin-inline: auto;
     }
+  }
 
+  @media (max-width: 640px) {
     .grilla-tarjetas {
       gap: 0.9rem;
     }

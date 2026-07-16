@@ -28,9 +28,14 @@ const fotos = [
   <div class="hero__layout">
     <div class="hero__contenido">
       <h1>
-        Estética y salud dental
+        Estética dental con un enfoque
         <span class="hero__acento">natural y personalizado</span>
       </h1>
+      <p class="hero__bajada">
+        Realizamos tratamientos personalizados con tecnología digital para lograr una sonrisa
+        armónica y natural, cuidando la salud, la función y la estructura dental con un enfoque
+        basado en la preservación de cada pieza.
+      </p>
       <a
         href={SITE.whatsappTurno}
         target="_blank"
@@ -244,17 +249,25 @@ const fotos = [
 
     .hero__contenido h1 {
       font-weight: 500;
-      font-size: clamp(2rem, 3.2vw, 2.9rem);
+      font-size: clamp(1.9rem, 2.9vw, 2.6rem);
       color: var(--tinta);
-      margin-bottom: 0.8em;
+      margin-bottom: 0.5em;
     }
 
     .hero__acento {
       color: var(--malva-oscuro);
     }
 
+    /* subtítulo del docx v4 — solo desktop: en mobile taparía la foto */
+    .hero__bajada {
+      color: var(--tinta-suave);
+      max-width: 42ch;
+      margin-bottom: 1.6rem;
+    }
+
     .hero__media {
-      min-height: clamp(420px, 42vw, 620px);
+      /* algo más baja para que título + bajada + CTA entren sin scroll */
+      min-height: clamp(380px, 36vw, 540px);
     }
 
     /* tinte "cálido leve": los blancos del consultorio se mantienen limpios */
@@ -330,6 +343,11 @@ const fotos = [
       color: #45382f;
       margin-bottom: 0.9em;
       text-shadow: 0 2px 16px rgb(120 86 66 / 0.22);
+    }
+
+    /* la bajada solo va en desktop */
+    .hero__bajada {
+      display: none;
     }
 
     .hero__cta {
