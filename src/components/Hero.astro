@@ -81,6 +81,18 @@ const fotos = [
           />
         ))}
       </div>
+
+      {/* CTA sobre la foto — solo mobile (variante C); en desktop se usa el del panel */}
+      <a
+        href={SITE.whatsappTurno}
+        target="_blank"
+        rel="noopener"
+        class="boton boton--primario hero__cta-movil"
+        data-evento="whatsapp"
+      >
+        <Icono nombre="calendario" />
+        Solicitar turno
+      </a>
     </div>
   </div>
 </section>
@@ -139,6 +151,11 @@ const fotos = [
 
   .hero__cta:hover {
     background: var(--malva);
+  }
+
+  /* CTA sobre la foto: solo se muestra en mobile (variante C) */
+  .hero__cta-movil {
+    display: none;
   }
 
   .hero__acento {
@@ -294,8 +311,8 @@ const fotos = [
   }
 
   /* ==================================================================
-     Mobile (≤760px) — split: foto arriba en banda, texto en panel crema.
-     Mismo lenguaje que el desktop; texto oscuro y 100% legible (sin velos).
+     Mobile (≤760px) — VARIANTE C (mix): título centrado sobre crema (fuera
+     de la foto) y el CTA "Solicitar turno" adentro de la imagen.
      ================================================================== */
   @media (max-width: 760px) {
     .hero {
@@ -307,7 +324,36 @@ const fotos = [
       flex-direction: column;
     }
 
-    /* la foto va arriba, en una banda con base redondeada */
+    /* título centrado, oscuro y legible, arriba de la foto */
+    .hero__contenido {
+      align-items: center;
+      text-align: center;
+      padding: 1.4rem clamp(1rem, 5vw, 1.8rem) 1rem;
+    }
+
+    .hero__contenido h1 {
+      font-size: 1.75rem;
+      font-weight: 500;
+      max-width: 20ch;
+      color: var(--tinta);
+      line-height: 1.15;
+      margin-bottom: 0;
+    }
+
+    .hero__acento {
+      color: var(--malva-oscuro);
+    }
+
+    .hero__bajada {
+      display: none;
+    }
+
+    /* el CTA del panel no va en mobile: se usa el que va sobre la foto */
+    .hero__cta {
+      display: none;
+    }
+
+    /* foto en banda con base redondeada */
     .hero__media {
       position: relative;
       aspect-ratio: 5 / 4;
@@ -319,40 +365,29 @@ const fotos = [
       object-position: var(--pos-movil, var(--pos, 50% 50%));
     }
 
-    /* sin velo: el texto ya no va sobre la foto */
+    /* leve oscurecido al pie para asentar el botón sobre la foto */
     .hero__isla {
-      display: none;
+      background: linear-gradient(
+        0deg,
+        rgb(40 28 20 / 0.4) 0%,
+        rgb(40 28 20 / 0) 34%
+      );
     }
 
-    .hero__contenido {
-      align-items: flex-start;
-      text-align: left;
-      padding: 1.5rem clamp(1.1rem, 5vw, 1.8rem) 0.5rem;
-    }
-
-    .hero__contenido h1 {
-      font-size: 1.75rem;
-      font-weight: 500;
-      max-width: 18ch;
-      color: var(--tinta);
-      line-height: 1.15;
-      margin-bottom: 0.55em;
-    }
-
-    .hero__acento {
-      color: var(--malva-oscuro);
-    }
-
-    .hero__bajada {
-      display: none;
-    }
-
-    .hero__cta {
+    /* CTA dentro de la imagen, centrado abajo */
+    .hero__cta-movil {
+      display: inline-flex;
+      position: absolute;
+      z-index: 3;
+      left: 50%;
+      bottom: 1.4rem;
+      translate: -50% 0;
       font-size: 0.8rem;
-      padding: 0.8em 1.4em;
+      padding: 0.82em 1.5em;
+      box-shadow: 0 8px 20px rgb(40 28 20 / 0.35);
     }
 
-    /* controles del carrusel dentro de la banda de foto */
+    /* controles del carrusel */
     .hero__flecha {
       width: 34px;
       height: 34px;
@@ -366,8 +401,10 @@ const fotos = [
       right: 12px;
     }
 
+    /* puntos arriba: abajo está el botón */
     .hero__puntos {
-      bottom: 10px;
+      top: 12px;
+      bottom: auto;
     }
   }
 </style>
