@@ -145,7 +145,8 @@ a {
 
 .bajada {
   max-width: 46rem;
-  margin: 0 auto 3rem;
+  /* gap uniforme entre el texto introductorio y el contenido de la sección (#6) */
+  margin: 0 auto 2.5rem;
   text-align: center;
   color: var(--tinta-suave);
 }

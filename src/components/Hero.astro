@@ -13,13 +13,15 @@ const fotos = [
     img: img1,
     alt: 'Consultorio de la Dra. Ana Laura Batalles',
     pos: '62% 42%',
-    posMovil: '50% 72%',
+    // mobile: encuadre más alto para que el título caiga sobre la pared/ventana
+    // (zona calmada) y no sobre el equipo dental (#1)
+    posMovil: '48% 38%',
   },
   {
     img: img2,
     alt: 'Sala de atención del consultorio',
     pos: '70% 45%',
-    posMovil: '62% 68%',
+    posMovil: '58% 40%',
   },
 ];
 ---
@@ -314,13 +316,13 @@ const fotos = [
       object-position: var(--pos-movil, var(--pos, 50% 50%));
     }
 
-    /* la isla cálida da fondo legible al texto */
+    /* velo cálido oscuro arriba: da contraste al título en crudo claro (#1) */
     .hero__isla {
-      background: radial-gradient(
-        ellipse 300px 250px at 28% 24%,
-        rgb(242 226 214 / 0.5),
-        rgb(242 226 214 / 0.2) 55%,
-        rgb(242 226 214 / 0) 72%
+      background: linear-gradient(
+        180deg,
+        rgb(58 42 32 / 0.46) 0%,
+        rgb(58 42 32 / 0.18) 34%,
+        rgb(58 42 32 / 0) 58%
       );
     }
 
@@ -337,12 +339,15 @@ const fotos = [
     }
 
     .hero__contenido h1 {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 500;
-      max-width: 15ch;
-      color: #45382f;
-      margin-bottom: 0.9em;
-      text-shadow: 0 2px 16px rgb(120 86 66 / 0.22);
+      max-width: 16ch;
+      /* crudo claro sobre la foto, como el ejemplo de Pepe (#1) */
+      color: var(--crema);
+      /* menos interlineado (#1) */
+      line-height: 1.12;
+      margin-bottom: 0.8em;
+      text-shadow: 0 2px 14px rgb(40 28 20 / 0.5);
     }
 
     /* la bajada solo va en desktop */
