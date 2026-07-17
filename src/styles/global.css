@@ -43,6 +43,16 @@ section[id] {
   scroll-margin-top: 140px;
 }
 
+/* En desktop, al saltar a Contacto desde el menú, aterrizamos un poco más
+   abajo (menos colchón) para que el botón "Enviar" del formulario quede a la
+   vista sin seguir scrolleando (#8). El header pegajoso mide ~95px, así que
+   100px no llega a tapar el título de la sección. */
+@media (min-width: 961px) {
+  #contacto {
+    scroll-margin-top: 100px;
+  }
+}
+
 body {
   margin: 0;
   background: var(--crema);
@@ -211,8 +221,9 @@ a {
 }
 
 .tarjeta__icono {
-  width: 56px;
-  height: 56px;
+  /* +10% respecto de 56px, pedido del cliente (#7) */
+  width: 62px;
+  height: 62px;
   margin: 0 auto 0.4rem;
   color: var(--linea);
 }

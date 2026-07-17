@@ -6,7 +6,7 @@ import Icono from '../components/Icono.astro';
 import SeccionContacto from '../components/SeccionContacto.astro';
 import { SITE } from '../data/site';
 import { tratamientos } from '../data/tratamientos';
-import anaPanel from '../assets/consultorio/ana-laura-panel.jpg';
+import anaPanel from '../assets/consultorio/ana-laura-panel-retocada.png';
 
 // "Nuestra filosofía de trabajo" — checklist del docx v4 (2026-07-15)
 const filosofia = [
@@ -126,7 +126,7 @@ const jsonLd = {
         personalizada, priorizando siempre la salud, la función y la preservación de la
         estructura dental.”
       </p>
-      <div class="grilla-tarjetas grilla-tarjetas--3 grilla-tarjetas--accesos">
+      <div class="grilla-tarjetas grilla-tarjetas--accesos">
         {
           tratamientos.map((t) => (
             <a class="tarjeta tarjeta--enlace" href={`/tratamientos/${t.slug}`}>
@@ -173,7 +173,8 @@ const jsonLd = {
     grid-template-columns: minmax(260px, 380px) 1fr;
     gap: clamp(2rem, 5vw, 4.5rem);
     align-items: center;
-    max-width: 60rem;
+    /* misma anchura de contenido que el resto de las secciones (#2): antes
+       quedaba tope en 60rem y se veía más angosta que Tratamientos */
     margin-inline: auto;
   }
 
@@ -243,8 +244,19 @@ const jsonLd = {
     grid-template-columns: repeat(4, 1fr);
   }
 
-  .grilla-tarjetas--3 {
-    grid-template-columns: repeat(3, 1fr);
+  /* 5 accesos: 3 arriba y 2 abajo, centradas respecto de las de arriba (#5).
+     Grilla de 6 columnas, cada tarjeta ocupa 2; la 4.ª arranca en la col 2,
+     de modo que la fila inferior queda centrada. */
+  .grilla-tarjetas--accesos {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .grilla-tarjetas--accesos > .tarjeta {
+    grid-column: span 2;
+  }
+
+  .grilla-tarjetas--accesos > .tarjeta:nth-child(4) {
+    grid-column: 2 / span 2;
   }
 
   .tarjeta--enlace {
@@ -295,8 +307,15 @@ const jsonLd = {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    .grilla-tarjetas--3 {
+    /* en tablet/mobile vuelven a dos columnas normales (sin el offset de la
+       fila centrada, que solo tiene sentido con las tres de arriba) */
+    .grilla-tarjetas--accesos {
       grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grilla-tarjetas--accesos > .tarjeta,
+    .grilla-tarjetas--accesos > .tarjeta:nth-child(4) {
+      grid-column: auto;
     }
   }
 

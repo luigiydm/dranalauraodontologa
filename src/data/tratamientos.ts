@@ -26,7 +26,7 @@ export const tratamientos: Tratamiento[] = [
     titulo: 'Estética dental',
     icono: 'sonrisa',
     resumen:
-      'Mejoramos la apariencia de la sonrisa respetando su naturalidad, evitando intervenciones innecesarias y cuidando la salud y la estructura dental.',
+      'Mejoramos la sonrisa respetando su naturalidad y preservando la estructura dental.',
     intro: [
       'Mejoramos la apariencia de la sonrisa respetando su naturalidad, evitando intervenciones innecesarias y cuidando la salud y la estructura dental.',
       'Buscamos resultados estéticos que se integren de manera natural, evitando tratamientos invasivos innecesarios y priorizando la conservación dental.',
@@ -246,7 +246,7 @@ export const tratamientos: Tratamiento[] = [
     titulo: 'Rehabilitación oral',
     icono: 'anillos',
     resumen:
-      'Abordamos casos de mayor complejidad de forma integral, buscando recuperar función y estética en equilibrio, con resultados duraderos.',
+      'Recuperamos función y estética en casos complejos con una planificación integral y conservadora.',
     intro: [
       'La rehabilitación oral es un abordaje integral que permite recuperar la función, la estética y la salud de la boca en casos donde existen múltiples piezas dentales comprometidas.',
       'Combina distintas técnicas y especialidades para devolver equilibrio a la sonrisa, respetando la estructura dental y la biología de cada paciente.',
@@ -294,7 +294,7 @@ export const tratamientos: Tratamiento[] = [
     titulo: 'Implantes y prótesis dentales',
     icono: 'implante',
     resumen:
-      'Reemplazamos piezas dentales integrando soluciones funcionales y estéticas, priorizando siempre la armonía y la estabilidad en el tiempo.',
+      'Reemplazamos piezas ausentes con soluciones estables, funcionales y de apariencia natural.',
     intro: [
       'Los implantes y prótesis dentales permiten reemplazar piezas ausentes y recuperar la función de la mordida, la estética y la estabilidad de la sonrisa.',
       'Los implantes se integran al hueso y actúan como soporte para coronas o prótesis, logrando una solución fija, funcional y de aspecto natural.',
@@ -342,7 +342,7 @@ export const tratamientos: Tratamiento[] = [
     titulo: 'Ortodoncia',
     icono: 'bracket',
     resumen:
-      'Alineamos la sonrisa respetando la funcionalidad y la estructura dental, buscando resultados estéticos y estables.',
+      'Mejoramos la alineación y la mordida buscando resultados armónicos y duraderos.',
     intro: [
       'La ortodoncia es la especialidad que permite corregir la posición de los dientes y mejorar la mordida, contribuyendo a una sonrisa más armónica y a una correcta función.',
       'Los dientes mal posicionados pueden dificultar la higiene, favorecer problemas dentales y generar desequilibrios en la función. Alinearlos no solo mejora la estética, sino también la salud bucal a largo plazo.',
@@ -403,7 +403,7 @@ export const tratamientos: Tratamiento[] = [
     titulo: 'Odontología general',
     icono: 'diente',
     resumen:
-      'Tratamientos orientados a mantener la salud bucal, prevenir y resolver patologías de forma temprana.',
+      'Prevenimos y tratamos problemas bucales de manera temprana y conservadora.',
     intro: [
       'La odontología general se enfoca en la prevención, el diagnóstico y el tratamiento de las principales patologías bucales, con el objetivo de mantener la salud dental a lo largo del tiempo.',
       'A través de controles periódicos y tratamientos adecuados, es posible detectar problemas en etapas tempranas y resolverlos de forma más simple y conservadora.',
