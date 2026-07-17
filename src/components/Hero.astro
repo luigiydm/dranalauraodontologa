@@ -294,53 +294,59 @@ const fotos = [
   }
 
   /* ==================================================================
-     Mobile (≤760px) — split: foto arriba en banda, texto en panel crema.
-     Mismo lenguaje que el desktop; texto oscuro y 100% legible (sin velos).
+     Mobile (≤760px) — VARIANTE B (overlay abajo): texto crudo al pie de la
+     foto, con degradé de abajo hacia arriba para contraste.
      ================================================================== */
   @media (max-width: 760px) {
     .hero {
-      background: var(--crema);
+      aspect-ratio: 1.2 / 1;
+      overflow: hidden;
+      border-radius: 0 0 50% 50% / 0 0 44px 44px;
     }
 
     .hero__layout {
-      display: flex;
-      flex-direction: column;
+      height: 100%;
     }
 
-    /* la foto va arriba, en una banda con base redondeada */
     .hero__media {
-      position: relative;
-      aspect-ratio: 5 / 4;
-      border-radius: 0 0 44px 44px;
-      overflow: hidden;
+      position: absolute;
+      inset: 0;
     }
 
     .hero__slide img {
       object-position: var(--pos-movil, var(--pos, 50% 50%));
     }
 
-    /* sin velo: el texto ya no va sobre la foto */
+    /* degradé de abajo hacia arriba: base oscura para el texto al pie */
     .hero__isla {
-      display: none;
+      background: linear-gradient(
+        0deg,
+        rgb(40 28 20 / 0.66) 0%,
+        rgb(40 28 20 / 0.34) 26%,
+        rgb(40 28 20 / 0) 58%
+      );
     }
 
     .hero__contenido {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
       align-items: flex-start;
       text-align: left;
-      padding: 1.5rem clamp(1.1rem, 5vw, 1.8rem) 0.5rem;
+      padding: 0 clamp(1.1rem, 4vw, 2rem) 1.8rem;
     }
 
     .hero__contenido h1 {
-      font-size: 1.75rem;
+      font-size: 1.7rem;
       font-weight: 500;
-      max-width: 18ch;
-      color: var(--tinta);
-      line-height: 1.15;
-      margin-bottom: 0.55em;
-    }
-
-    .hero__acento {
-      color: var(--malva-oscuro);
+      max-width: 17ch;
+      color: var(--crema);
+      line-height: 1.14;
+      margin-bottom: 0.7em;
+      text-shadow: 0 2px 16px rgb(30 20 14 / 0.55);
     }
 
     .hero__bajada {
@@ -352,10 +358,10 @@ const fotos = [
       padding: 0.8em 1.4em;
     }
 
-    /* controles del carrusel dentro de la banda de foto */
     .hero__flecha {
       width: 34px;
       height: 34px;
+      top: 40%;
     }
 
     .hero__flecha--prev {
@@ -366,8 +372,10 @@ const fotos = [
       right: 12px;
     }
 
+    /* puntos arriba: abajo está el texto */
     .hero__puntos {
-      bottom: 10px;
+      top: 12px;
+      bottom: auto;
     }
   }
 </style>
