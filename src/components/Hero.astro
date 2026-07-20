@@ -368,6 +368,16 @@ const fotos = [
       overflow: hidden;
     }
 
+    /* El recorte redondeado también en cada slide: durante el fade el slide
+       entrante se promueve a su propia capa de composición y, si el radio
+       viviera solo en el contenedor, "escaparía" el recorte y se vería la foto
+       rectangular completa hasta terminar la transición. Con el radio en el
+       propio slide, la foto entra ya recortada. */
+    .hero__slide {
+      border-radius: 0 0 44px 44px;
+      overflow: hidden;
+    }
+
     .hero__slide img {
       object-position: var(--pos-movil, var(--pos, 50% 50%));
     }
