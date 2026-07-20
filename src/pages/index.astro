@@ -40,8 +40,12 @@ const jsonLd = {
     longitude: SITE.geo.lng,
   },
   openingHoursSpecification: [
-    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Thursday'], opens: '08:00', closes: '16:00' },
-    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Wednesday', 'Friday'], opens: '08:00', closes: '15:00' },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '08:00',
+      closes: '16:00',
+    },
   ],
   sameAs: [SITE.facebook, SITE.instagram],
 };
@@ -64,17 +68,12 @@ const jsonLd = {
           </p>
           <p>
             Por eso cada caso comienza con un diagnóstico preciso, una planificación personalizada
-            y una evaluación cuidadosa de todas las opciones disponibles, priorizando siempre la
-            preservación de la salud, la función y la estructura dental para obtener resultados
-            más naturales, predecibles y duraderos.
+            y una evaluación cuidadosa de todas las opciones disponibles. Nuestro objetivo no es
+            indicar más tratamientos, sino <strong>indicar el tratamiento correcto</strong>,
+            priorizando siempre la preservación de la salud, la función y la estructura dental
+            <strong>para obtener resultados más naturales, predecibles y duraderos.</strong>
           </p>
         </div>
-
-        <!-- frase destacada (#3): la idea más fuerte de la página -->
-        <p class="forma__frase">
-          Nuestro objetivo no es indicar más tratamientos.
-          <span>Es indicar el tratamiento correcto.</span>
-        </p>
       </div>
 
       <div class="forma__grid">
@@ -183,20 +182,13 @@ const jsonLd = {
     margin-bottom: 1em;
   }
 
-  /* frase destacada: la idea más fuerte de la página, con aire alrededor (#3) */
-  .forma__frase {
-    max-width: 40rem;
-    margin: clamp(1.6rem, 4vw, 2.8rem) auto clamp(2.2rem, 5vw, 3.4rem);
-    font-family: var(--fuente-titulos);
-    font-size: clamp(1.35rem, 2.6vw, 2rem);
-    font-weight: 500;
-    line-height: 1.32;
-    color: var(--tinta);
+  .forma__bajada p:last-child {
+    margin-bottom: 0;
   }
 
-  .forma__frase span {
-    display: block;
-    color: var(--malva-oscuro);
+  .forma__bajada strong {
+    font-weight: 700;
+    color: var(--tinta);
   }
 
   .forma__grid {
@@ -212,9 +204,9 @@ const jsonLd = {
     border-radius: var(--radio-grande, 24px);
     overflow: hidden;
     box-shadow: var(--sombra);
-    min-height: clamp(420px, 56vh, 600px);
+    min-height: clamp(360px, 48vh, 500px);
     /* desfasaje editorial: la foto baja un poco respecto del texto, como el hero */
-    margin-top: clamp(1rem, 4vw, 2.75rem);
+    margin-top: clamp(0.75rem, 3vh, 2rem);
   }
 
   .forma__foto img {
@@ -237,7 +229,7 @@ const jsonLd = {
     font-size: 1.35rem;
     font-weight: 600;
     letter-spacing: 0.06em;
-    margin-bottom: 1.25rem;
+    margin-bottom: clamp(0.75rem, 2vh, 1.25rem);
   }
 
   .forma__lista ul {
@@ -245,14 +237,14 @@ const jsonLd = {
     margin: 0 0 1.7rem;
     padding: 0;
     display: grid;
-    gap: 0.95rem;
+    gap: clamp(0.45rem, 1.5vh, 0.95rem);
   }
 
   .forma__lista li {
     display: flex;
     align-items: center;
     gap: 0.7rem;
-    font-size: 1.14rem;
+    font-size: clamp(1rem, 2.2vh, 1.14rem);
   }
 
   .forma__lista li :global(svg) {
@@ -265,15 +257,11 @@ const jsonLd = {
   .forma__cierre {
     font-style: italic;
     color: var(--tinta-suave);
-    font-size: 1.05rem;
+    font-size: clamp(0.95rem, 2vh, 1.05rem);
     margin: 0;
   }
 
   /* ---- Ana Laura Batalles: texto centrado, sin foto ---- */
-  .doctora__texto {
-    max-width: 50rem;
-  }
-
   .doctora__texto p {
     color: var(--tinta-suave);
   }
@@ -360,17 +348,34 @@ const jsonLd = {
     margin-bottom: 1.6rem;
   }
 
-  /* la sección "Nuestra forma de trabajar" ocupa un viewport completo en
-     desktop y centra su contenido (#3) */
-  @media (min-width: 761px) {
+  /* En desktop la sección usa exactamente la altura disponible debajo del
+     header. La segunda fila absorbe el espacio restante y recorta la foto sin
+     empujar la filosofía fuera del viewport. */
+  @media (min-width: 901px) {
     .forma {
       display: flex;
       align-items: center;
-      min-height: 100vh;
+      height: calc(100svh - 96px);
+      min-height: 620px;
+      padding-block: clamp(2rem, 5vh, 3rem);
     }
 
     .forma__inner {
       width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(1rem, 2.5vh, 1.5rem);
+    }
+
+    .forma__grid {
+      height: 100%;
+      min-height: 0;
+    }
+
+    .forma__foto {
+      height: calc(100% - clamp(0.75rem, 3vh, 2rem));
+      min-height: 0;
     }
   }
 
@@ -391,13 +396,14 @@ const jsonLd = {
     }
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 760px) {
     .forma__grid {
       grid-template-columns: 1fr;
     }
 
     .forma__foto {
       max-width: 360px;
+      height: auto;
       margin-inline: auto;
       margin-top: 0;
       min-height: auto;
@@ -416,16 +422,14 @@ const jsonLd = {
       grid-template-columns: 1fr;
     }
 
-    /* accesos breves (tratamientos): dos columnas sí funcionan */
-    .grilla-tarjetas--accesos {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  /* una sola columna únicamente en pantallas realmente angostas */
-  @media (max-width: 380px) {
+    /* En teléfonos las tarjetas usan todo el ancho para evitar columnas altas
+       y angostas, tal como pidió el cliente en la segunda ronda. */
     .grilla-tarjetas--accesos {
       grid-template-columns: 1fr;
+    }
+
+    .grilla-tarjetas--accesos .tarjeta {
+      padding-block: 2rem;
     }
   }
 </style>

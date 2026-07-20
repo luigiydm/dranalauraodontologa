@@ -5,8 +5,8 @@ import { SITE } from '../data/site';
 import img1 from '../assets/consultorio/hero/IMG-1.jpg';
 import img2 from '../assets/consultorio/hero/IMG-2.jpg';
 
-// encuadre propio por foto Y por breakpoint: en mobile el recorte cambia
-// para que el título no pise el monitor con el isologo.
+// Encuadre propio por foto y breakpoint: en mobile el recorte cambia para
+// conservar una zona útil detrás del título superpuesto.
 // (las fotos nuevas del cliente van a la galería, no acá)
 const fotos = [
   {
@@ -31,7 +31,7 @@ const fotos = [
     <div class="hero__contenido">
       <h1>
         Estética dental
-        <span class="hero__acento">natural y personalizada</span>
+        <span class="hero__acento">personalizada y natural</span>
       </h1>
       <p class="hero__bajada">
         Realizamos tratamientos personalizados con tecnología digital para lograr una sonrisa
@@ -81,18 +81,6 @@ const fotos = [
           />
         ))}
       </div>
-
-      {/* CTA sobre la foto — solo mobile (variante C); en desktop se usa el del panel */}
-      <a
-        href={SITE.whatsappTurno}
-        target="_blank"
-        rel="noopener"
-        class="boton boton--primario hero__cta-movil"
-        data-evento="whatsapp"
-      >
-        <Icono nombre="calendario" />
-        Solicitar turno
-      </a>
     </div>
   </div>
 </section>
@@ -151,11 +139,6 @@ const fotos = [
 
   .hero__cta:hover {
     background: var(--malva);
-  }
-
-  /* CTA sobre la foto: solo se muestra en mobile (variante C) */
-  .hero__cta-movil {
-    display: none;
   }
 
   .hero__acento {
@@ -262,7 +245,10 @@ const fotos = [
       align-items: flex-start;
       padding-block: clamp(3rem, 6vw, 5rem);
       /* el texto arranca alineado con el contenedor central */
-      padding-inline-start: max(clamp(1rem, 4vw, 2rem), calc((100vw - 1120px) / 2 + 2rem));
+      padding-inline-start: max(
+        clamp(1rem, 4vw, 2rem),
+        calc((100vw - var(--ancho-max)) / 2 + 2rem)
+      );
       padding-inline-end: clamp(1.5rem, 4vw, 4rem);
     }
 
@@ -311,8 +297,7 @@ const fotos = [
   }
 
   /* ==================================================================
-     Mobile (≤760px) — VARIANTE C (mix): título centrado sobre crema (fuera
-     de la foto) y el CTA "Solicitar turno" adentro de la imagen.
+     Mobile (≤760px): título claro y CTA agrupados sobre la fotografía.
      ================================================================== */
   @media (max-width: 760px) {
     .hero {
@@ -320,42 +305,64 @@ const fotos = [
     }
 
     .hero__layout {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      position: relative;
     }
 
-    /* título centrado, oscuro y legible, arriba de la foto */
+    .hero__contenido,
+    .hero__media {
+      grid-area: 1 / 1;
+    }
+
+    /* Un único bloque de contenido sirve en ambos breakpoints. En mobile se
+       superpone arriba a la izquierda, como en la referencia del cliente. */
     .hero__contenido {
-      align-items: center;
-      text-align: center;
-      padding: 1.4rem clamp(1rem, 5vw, 1.8rem) 1rem;
+      position: relative;
+      z-index: 4;
+      align-self: start;
+      justify-self: start;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: min(82%, 20rem);
+      padding: clamp(1.35rem, 6vw, 1.8rem);
+      text-align: left;
+      pointer-events: none;
     }
 
     .hero__contenido h1 {
-      font-size: 1.75rem;
+      font-size: clamp(1.45rem, 7vw, 1.8rem);
       font-weight: 500;
-      max-width: 20ch;
-      color: var(--tinta);
-      line-height: 1.15;
+      color: var(--crema);
+      line-height: 1.08;
       margin-bottom: 0;
+      text-wrap: balance;
+      text-shadow: 0 2px 12px rgb(30 20 16 / 0.45);
     }
 
     .hero__acento {
-      color: var(--malva-oscuro);
+      color: var(--crema);
+      line-height: 1.05;
     }
 
     .hero__bajada {
       display: none;
     }
 
-    /* el CTA del panel no va en mobile: se usa el que va sobre la foto */
+    /* El mismo CTA de desktop queda inmediatamente debajo del título. */
     .hero__cta {
-      display: none;
+      margin-top: 1rem;
+      padding: 0.78em 1.25em;
+      font-size: 0.74rem;
+      white-space: nowrap;
+      box-shadow: 0 8px 20px rgb(40 28 20 / 0.32);
+      pointer-events: auto;
     }
 
     /* foto en banda con base redondeada */
     .hero__media {
       position: relative;
+      z-index: 1;
       aspect-ratio: 5 / 4;
       border-radius: 0 0 44px 44px;
       overflow: hidden;
@@ -365,26 +372,17 @@ const fotos = [
       object-position: var(--pos-movil, var(--pos, 50% 50%));
     }
 
-    /* leve oscurecido al pie para asentar el botón sobre la foto */
+    /* Veladura localizada: ambas fotos son claras y el texto crudo necesita
+       contraste estable mientras cambia el carrusel. */
     .hero__isla {
-      background: linear-gradient(
-        0deg,
-        rgb(40 28 20 / 0.4) 0%,
-        rgb(40 28 20 / 0) 34%
-      );
-    }
-
-    /* CTA dentro de la imagen, centrado abajo */
-    .hero__cta-movil {
-      display: inline-flex;
-      position: absolute;
-      z-index: 3;
-      left: 50%;
-      bottom: 1.4rem;
-      translate: -50% 0;
-      font-size: 0.8rem;
-      padding: 0.82em 1.5em;
-      box-shadow: 0 8px 20px rgb(40 28 20 / 0.35);
+      background:
+        linear-gradient(
+          135deg,
+          rgb(40 28 20 / 0.62) 0%,
+          rgb(40 28 20 / 0.34) 38%,
+          rgb(40 28 20 / 0) 70%
+        ),
+        linear-gradient(0deg, rgb(40 28 20 / 0.18) 0%, rgb(40 28 20 / 0) 30%);
     }
 
     /* controles del carrusel */
@@ -401,10 +399,10 @@ const fotos = [
       right: 12px;
     }
 
-    /* puntos arriba: abajo está el botón */
+    /* Los puntos vuelven al pie; el contenido ocupa la zona superior. */
     .hero__puntos {
-      top: 12px;
-      bottom: auto;
+      top: auto;
+      bottom: 12px;
     }
   }
 </style>

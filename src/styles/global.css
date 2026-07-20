@@ -23,7 +23,7 @@
   --fuente-titulos: 'Quicksand Variable', 'Quicksand', sans-serif;
   --fuente-texto: 'Open Sans', sans-serif;
 
-  --ancho-max: 1120px;
+  --ancho-max: 1280px;
   --radio: 14px;
   --sombra: 0 10px 30px rgb(68 58 51 / 0.08);
 }
@@ -43,13 +43,15 @@ section[id] {
   scroll-margin-top: 140px;
 }
 
-/* En desktop, al saltar a Contacto desde el menú, aterrizamos un poco más
-   abajo (menos colchón) para que el botón "Enviar" del formulario quede a la
-   vista sin seguir scrolleando (#8). El header pegajoso mide ~95px, así que
-   100px no llega a tapar el título de la sección. */
-@media (min-width: 961px) {
+/* Contacto ancla en el título, no en el borde de la sección. Así evitamos
+   sumar el padding superior de la sección y el formulario entra en pantalla. */
+#contacto {
+  scroll-margin-top: 92px;
+}
+
+@media (min-width: 901px) {
   #contacto {
-    scroll-margin-top: 100px;
+    scroll-margin-top: 96px;
   }
 }
 
@@ -144,7 +146,6 @@ a {
 }
 
 .bajada {
-  max-width: 46rem;
   /* gap uniforme entre el texto introductorio y el contenido de la sección (#6) */
   margin: 0 auto 2.5rem;
   text-align: center;
