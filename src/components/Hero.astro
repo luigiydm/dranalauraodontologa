@@ -317,6 +317,8 @@ const fotos = [
     /* Un único bloque de contenido sirve en ambos breakpoints. En mobile se
        superpone arriba a la izquierda, como en la referencia del cliente. */
     .hero__contenido {
+      /* blanco cálido (como la referencia del cliente), un toque más limpio que el crema */
+      --titulo-mobile: #fffcf7;
       position: relative;
       z-index: 4;
       align-self: start;
@@ -324,25 +326,26 @@ const fotos = [
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      width: min(82%, 20rem);
-      padding: clamp(1.35rem, 6vw, 1.8rem);
+      /* angosto y arrimado arriba a la izquierda, como la foto de referencia */
+      width: min(68%, 15rem);
+      padding: clamp(3.2rem, 15vw, 4.4rem) clamp(1.2rem, 5vw, 1.6rem) 1.2rem;
       text-align: left;
       pointer-events: none;
     }
 
     .hero__contenido h1 {
-      font-size: clamp(1.45rem, 7vw, 1.8rem);
+      font-size: clamp(1.1rem, 5.2vw, 1.35rem);
       font-weight: 500;
-      color: var(--crema);
-      line-height: 1.08;
+      color: var(--titulo-mobile);
+      line-height: 1.1;
       margin-bottom: 0;
       text-wrap: balance;
-      text-shadow: 0 2px 12px rgb(30 20 16 / 0.45);
+      text-shadow: 0 2px 12px rgb(30 20 16 / 0.5);
     }
 
     .hero__acento {
-      color: var(--crema);
-      line-height: 1.05;
+      color: var(--titulo-mobile);
+      line-height: 1.08;
     }
 
     .hero__bajada {
