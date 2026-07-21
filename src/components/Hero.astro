@@ -332,16 +332,6 @@ const fotos = [
       padding: clamp(1.5rem, 6vw, 2.1rem) clamp(1.2rem, 5vw, 1.6rem) 1.2rem;
       text-align: left;
       pointer-events: none;
-      /* Scrim anclado al texto: velo oscuro suave justo detrás del título,
-         difuminado en los bordes. Garantiza contraste incluso sobre paredes/
-         ventanas muy claras (foto 2) sin oscurecer el resto de la foto. */
-      background: radial-gradient(
-        135% 120% at 20% 12%,
-        rgb(24 16 11 / 0.7) 0%,
-        rgb(24 16 11 / 0.44) 38%,
-        rgb(24 16 11 / 0.14) 62%,
-        rgb(24 16 11 / 0) 80%
-      );
     }
 
     .hero__contenido h1 {
@@ -351,7 +341,12 @@ const fotos = [
       line-height: 1.1;
       margin-bottom: 0;
       text-wrap: balance;
-      text-shadow: 0 2px 12px rgb(30 20 16 / 0.5);
+      /* halo ajustado en las propias letras: contraste sobre fondos claros
+         sin panel/velo visible detrás */
+      text-shadow:
+        0 0 3px rgb(20 13 8 / 0.72),
+        0 1px 3px rgb(20 13 8 / 0.6),
+        0 2px 6px rgb(20 13 8 / 0.45);
     }
 
     .hero__acento {
