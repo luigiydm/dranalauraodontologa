@@ -103,7 +103,8 @@ const fotos = [
     position: absolute;
     inset: 0;
     opacity: 0;
-    transition: opacity 0.7s ease;
+    z-index: 1;
+    transition: opacity 0.55s ease;
   }
 
   .hero__slide.activo {
@@ -427,17 +428,37 @@ const fotos = [
     const puntos = carrusel.querySelectorAll('.hero__punto');
     let actual = 0;
     let timer: ReturnType<typeof setInterval> | undefined;
+    let ocultarSaliente: ReturnType<typeof setTimeout> | undefined;
+    const DURACION = 550; // igual al transition del CSS
 
     const mostrar = (i: number) => {
-      slides[actual].classList.remove('activo');
-      slides[actual].setAttribute('aria-hidden', 'true');
-      puntos[actual].classList.remove('activo');
-      puntos[actual].setAttribute('aria-current', 'false');
-      actual = (i + slides.length) % slides.length;
-      slides[actual].classList.add('activo');
-      slides[actual].setAttribute('aria-hidden', 'false');
-      puntos[actual].classList.add('activo');
-      puntos[actual].setAttribute('aria-current', 'true');
+      const saliente = actual;
+      const entrante = (i + slides.length) % slides.length;
+      if (entrante === saliente) return;
+
+      // Fundido limpio: la foto entrante se funde POR ENCIMA mientras la
+      // saliente queda 100% opaca debajo. Así nunca se ven las dos a medias
+      // (que dejaba ver el fondo gris de la veladura).
+      (slides[entrante] as HTMLElement).style.zIndex = '2';
+      (slides[saliente] as HTMLElement).style.zIndex = '1';
+      slides[entrante].classList.add('activo');
+      slides[entrante].setAttribute('aria-hidden', 'false');
+      slides[saliente].setAttribute('aria-hidden', 'true');
+
+      puntos[saliente].classList.remove('activo');
+      puntos[saliente].setAttribute('aria-current', 'false');
+      puntos[entrante].classList.add('activo');
+      puntos[entrante].setAttribute('aria-current', 'true');
+
+      // Terminado el fundido, oculto la saliente (queda tapada por la entrante).
+      clearTimeout(ocultarSaliente);
+      const previa = slides[saliente] as HTMLElement;
+      ocultarSaliente = setTimeout(() => {
+        previa.classList.remove('activo');
+        previa.style.zIndex = '';
+      }, DURACION + 60);
+
+      actual = entrante;
     };
 
     // sin auto-avance para quien pidió menos movimiento (los controles
