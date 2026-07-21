@@ -332,6 +332,16 @@ const fotos = [
       padding: clamp(1.5rem, 6vw, 2.1rem) clamp(1.2rem, 5vw, 1.6rem) 1.2rem;
       text-align: left;
       pointer-events: none;
+      /* Scrim anclado al texto: velo oscuro suave justo detrás del título,
+         difuminado en los bordes. Garantiza contraste incluso sobre paredes/
+         ventanas muy claras (foto 2) sin oscurecer el resto de la foto. */
+      background: radial-gradient(
+        135% 120% at 20% 12%,
+        rgb(24 16 11 / 0.7) 0%,
+        rgb(24 16 11 / 0.44) 38%,
+        rgb(24 16 11 / 0.14) 62%,
+        rgb(24 16 11 / 0) 80%
+      );
     }
 
     .hero__contenido h1 {
@@ -386,17 +396,15 @@ const fotos = [
       object-position: var(--pos-movil, var(--pos, 50% 50%));
     }
 
-    /* Veladura localizada: ambas fotos son claras y el texto crudo necesita
-       contraste estable mientras cambia el carrusel. */
+    /* Scrim del título: velo oscuro suave detrás del texto para asegurar
+       contraste en CUALQUIER foto (incluidas las de fondo muy claro), sin
+       cambiar el color del título ni reubicarlo. */
     .hero__isla {
+      /* velo general suave (el contraste del título lo da el scrim del texto):
+         un toque arriba y otro al pie para los puntos del carrusel */
       background:
-        linear-gradient(
-          135deg,
-          rgb(40 28 20 / 0.62) 0%,
-          rgb(40 28 20 / 0.34) 38%,
-          rgb(40 28 20 / 0) 70%
-        ),
-        linear-gradient(0deg, rgb(40 28 20 / 0.18) 0%, rgb(40 28 20 / 0) 30%);
+        linear-gradient(180deg, rgb(30 21 15 / 0.16) 0%, rgb(30 21 15 / 0) 30%),
+        linear-gradient(0deg, rgb(30 21 15 / 0.18) 0%, rgb(30 21 15 / 0) 22%);
     }
 
     /* controles del carrusel */
