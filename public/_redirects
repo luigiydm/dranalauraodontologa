@@ -1,6 +1,7 @@
-# www -> apex, que es el host de las URLs canónicas. Va primero: las reglas se
-# evalúan en orden y esta tiene que ganarle a las de abajo.
-https://www.draanalaurabatalles.com.ar/*       https://draanalaurabatalles.com.ar/:splat   301
+# OJO: el 301 de www al apex NO se puede hacer acá. Pages ignora las reglas con
+# host absoluto cuando ese host está atado al proyecto como dominio custom
+# (probado en prod el 27/07/2026: `www` seguía respondiendo 200). Hay que
+# crearlo como Redirect Rule en la zona, por dashboard.
 
 # Redirects 301 desde las URLs del WordPress viejo
 /home                                          /                                        301
