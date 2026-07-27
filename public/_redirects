@@ -1,3 +1,7 @@
+# www -> apex, que es el host de las URLs canónicas. Va primero: las reglas se
+# evalúan en orden y esta tiene que ganarle a las de abajo.
+https://www.draanalaurabatalles.com.ar/*       https://draanalaurabatalles.com.ar/:splat   301
+
 # Redirects 301 desde las URLs del WordPress viejo
 /home                                          /                                        301
 /home/*                                        /:splat                                  301
