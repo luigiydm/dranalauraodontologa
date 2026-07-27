@@ -229,6 +229,12 @@ const TURNSTILE_SITEKEY = import.meta.env.PUBLIC_TURNSTILE_SITEKEY;
 </style>
 
 <script>
+  declare global {
+    interface Window {
+      turnstile?: { reset: (widget?: string) => void };
+    }
+  }
+
   const form = document.querySelector<HTMLFormElement>('.contacto__form');
   const estado = document.querySelector<HTMLElement>('.contacto__estado');
 
@@ -248,6 +254,7 @@ const TURNSTILE_SITEKEY = import.meta.env.PUBLIC_TURNSTILE_SITEKEY;
     try {
       const respuesta = await fetch('/api/contact', {
         method: 'POST',
+        headers: { Accept: 'application/json' },
         body: new FormData(form),
       });
       if (!respuesta.ok) throw new Error(String(respuesta.status));
@@ -265,6 +272,9 @@ const TURNSTILE_SITEKEY = import.meta.env.PUBLIC_TURNSTILE_SITEKEY;
         estado.classList.add('error');
       }
     } finally {
+      // El token de Turnstile se consume en cada verificación: sin reset, un
+      // segundo intento fallaría siempre.
+      window.turnstile?.reset();
       if (boton) {
         boton.disabled = false;
         boton.textContent = 'Enviar';
