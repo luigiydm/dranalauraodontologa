@@ -14,6 +14,13 @@ const planes = [
   { img: osde450, alt: 'OSDE 450' },
   { img: osde510, alt: 'OSDE 510' },
 ];
+
+const faqId = (pregunta: string) => pregunta
+  .toLowerCase()
+  .normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '')
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/(^-|-$)/g, '');
 ---
 
 <Base
@@ -30,8 +37,13 @@ const planes = [
 
       <div class="faq__lista">
         {
-          faqs.map((faq) => (
-            <details class="faq__item">
+          faqs.map((faq, i) => (
+            <details
+              class="faq__item"
+              data-faq-id={faqId(faq.pregunta)}
+              data-faq-category="general"
+              data-item-position={i + 1}
+            >
               <summary>{faq.pregunta}</summary>
               <div class="faq__respuesta" set:html={faq.respuesta} />
             </details>
@@ -40,7 +52,12 @@ const planes = [
       </div>
 
       <h2 class="titulo-seccion faq__os-titulo">Obras sociales</h2>
-      <details class="faq__item">
+      <details
+        class="faq__item"
+        data-faq-id="obras-sociales"
+        data-faq-category="coverage"
+        data-item-position={faqs.length + 1}
+      >
         <summary>¿Qué obras sociales trabajamos?</summary>
         <div class="faq__respuesta faq__os">
           <Image src={osdeLogo} alt="OSDE" width={200} />
@@ -134,3 +151,19 @@ const planes = [
     justify-content: center;
   }
 </style>
+
+<script>
+  const aperturasMedidas = new WeakSet<HTMLDetailsElement>();
+
+  document.querySelectorAll<HTMLDetailsElement>('.faq__item[data-faq-id]').forEach((item) => {
+    item.addEventListener('toggle', () => {
+      if (!item.open || aperturasMedidas.has(item)) return;
+      aperturasMedidas.add(item);
+      window.trackAnalytics?.('faq_open', {
+        faq_id: item.dataset.faqId ?? 'unknown',
+        faq_category: item.dataset.faqCategory ?? 'general',
+        item_position: Number(item.dataset.itemPosition ?? 0),
+      });
+    });
+  });
+</script>

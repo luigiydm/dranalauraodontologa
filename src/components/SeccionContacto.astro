@@ -17,19 +17,43 @@ const TURNSTILE_SITEKEY = import.meta.env.PUBLIC_TURNSTILE_SITEKEY;
         <ul>
           <li>
             <Icono nombre="ubicacion" />
-            <a href={SITE.mapsLink} target="_blank" rel="noopener">{SITE.direccion}</a>
+            <a
+              href={SITE.mapsLink}
+              target="_blank"
+              rel="noopener"
+              data-analytics-event="outbound_click"
+              data-analytics-destination-type="maps"
+              data-analytics-link-location="contact_section"
+            >{SITE.direccion}</a>
           </li>
           <li>
             <Icono nombre="telefono" />
-            <a href={SITE.telefonoHref} data-evento="telefono">{SITE.telefono}</a>
+            <a
+              href={SITE.telefonoHref}
+              data-analytics-event="contact_click"
+              data-analytics-contact-method="phone"
+              data-analytics-link-location="contact_section"
+            >{SITE.telefono}</a>
           </li>
           <li>
             <Icono nombre="email" />
-            <a href={SITE.emailHref} data-evento="email">{SITE.email}</a>
+            <a
+              href={SITE.emailHref}
+              data-analytics-event="contact_click"
+              data-analytics-contact-method="email"
+              data-analytics-link-location="contact_section"
+            >{SITE.email}</a>
           </li>
           <li>
             <Icono nombre="whatsapp" />
-            <a href={SITE.whatsapp} target="_blank" rel="noopener" data-evento="whatsapp">
+            <a
+              href={SITE.whatsapp}
+              target="_blank"
+              rel="noopener"
+              data-analytics-event="contact_click"
+              data-analytics-contact-method="whatsapp"
+              data-analytics-link-location="contact_section"
+            >
               Contactanos por WhatsApp por cualquier consulta o inquietud
             </a>
           </li>
@@ -46,16 +70,30 @@ const TURNSTILE_SITEKEY = import.meta.env.PUBLIC_TURNSTILE_SITEKEY;
           </li>
           <li>
             <Icono nombre="instagram" />
-            <a href={SITE.instagram} target="_blank" rel="noopener">@draanalaurabatalles</a>
+            <a
+              href={SITE.instagram}
+              target="_blank"
+              rel="noopener"
+              data-analytics-event="outbound_click"
+              data-analytics-destination-type="instagram"
+              data-analytics-link-location="contact_section"
+            >@draanalaurabatalles</a>
           </li>
           <li>
             <Icono nombre="facebook" />
-            <a href={SITE.facebook} target="_blank" rel="noopener">/Dra.Batalles</a>
+            <a
+              href={SITE.facebook}
+              target="_blank"
+              rel="noopener"
+              data-analytics-event="outbound_click"
+              data-analytics-destination-type="facebook"
+              data-analytics-link-location="contact_section"
+            >/Dra.Batalles</a>
           </li>
         </ul>
       </div>
 
-      <form class="contacto__form" method="POST" action="/api/contact" novalidate>
+      <form class="contacto__form" method="POST" action="/api/contact" novalidate data-analytics-form-id="contact_form">
         <label>
           Nombre
           <input type="text" name="nombre" required autocomplete="name" />
@@ -237,10 +275,31 @@ const TURNSTILE_SITEKEY = import.meta.env.PUBLIC_TURNSTILE_SITEKEY;
 
   const form = document.querySelector<HTMLFormElement>('.contacto__form');
   const estado = document.querySelector<HTMLElement>('.contacto__estado');
+  const formId = form?.dataset.analyticsFormId ?? 'contact_form';
+  let inicioMedido = false;
+
+  form?.addEventListener('input', (e) => {
+    if (inicioMedido || !(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement)) return;
+    if (!['nombre', 'email', 'mensaje'].includes(e.target.name)) return;
+    inicioMedido = true;
+    window.trackAnalytics?.('contact_form_start', {
+      form_id: formId,
+      field_name: e.target.name,
+    });
+  });
 
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (!form.reportValidity()) return;
+    if (!form.checkValidity()) {
+      const campo = form.querySelector<HTMLInputElement | HTMLTextAreaElement>(':invalid');
+      window.trackAnalytics?.('contact_form_error', {
+        form_id: formId,
+        error_type: 'validation',
+        field_name: campo?.name ?? 'unknown',
+      });
+      form.reportValidity();
+      return;
+    }
     const boton = form.querySelector<HTMLButtonElement>('button[type=submit]');
     if (boton) {
       boton.disabled = true;
@@ -257,15 +316,40 @@ const TURNSTILE_SITEKEY = import.meta.env.PUBLIC_TURNSTILE_SITEKEY;
         headers: { Accept: 'application/json' },
         body: new FormData(form),
       });
-      if (!respuesta.ok) throw new Error(String(respuesta.status));
+      const resultado = await respuesta.json().catch(() => ({})) as {
+        ok?: boolean;
+        error?: string;
+        ignored?: boolean;
+      };
+      if (!respuesta.ok) {
+        window.trackAnalytics?.('contact_form_error', {
+          form_id: formId,
+          error_type: 'api',
+          error_code: resultado.error ?? 'unknown',
+          http_status: respuesta.status,
+        });
+        throw new Error('api_error');
+      }
       form.reset();
       if (estado) {
         estado.textContent = 'Tu mensaje ha sido enviado. ¡Gracias por escribirnos!';
         estado.classList.add('ok');
       }
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({ event: 'envio_formulario' });
-    } catch {
+      if (!resultado.ignored) {
+        window.trackAnalytics?.('generate_lead', {
+          form_id: formId,
+          lead_source: 'website',
+          contact_method: 'form',
+        });
+      }
+    } catch (error) {
+      if (!(error instanceof Error && error.message === 'api_error')) {
+        window.trackAnalytics?.('contact_form_error', {
+          form_id: formId,
+          error_type: 'network',
+          error_code: 'request_failed',
+        });
+      }
       if (estado) {
         estado.textContent =
           'No pudimos enviar el mensaje. Probá de nuevo o escribinos por WhatsApp.';

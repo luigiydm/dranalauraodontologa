@@ -134,8 +134,17 @@ const jsonLd = {
       </p>
       <div class="grilla-tarjetas grilla-tarjetas--accesos">
         {
-          tratamientos.map((t) => (
-            <a class="tarjeta tarjeta--enlace" href={`/tratamientos/${t.slug}`}>
+          tratamientos.map((t, i) => (
+            <a
+              class="tarjeta tarjeta--enlace"
+              href={`/tratamientos/${t.slug}`}
+              data-analytics-event="select_content"
+              data-analytics-content-type="treatment"
+              data-analytics-item-id={t.slug}
+              data-analytics-item-name={t.titulo}
+              data-analytics-content-location="home_treatments"
+              data-analytics-item-position={i + 1}
+            >
               <div class="tarjeta__icono">
                 <Icono nombre={t.icono} />
               </div>
@@ -158,7 +167,16 @@ const jsonLd = {
         “Cada tratamiento comienza con un diagnóstico preciso y una planificación personalizada.
         Agendá tu primer consulta para evaluar tu caso y definir la mejor alternativa para vos.”
       </p>
-      <a href={SITE.whatsappTurno} target="_blank" rel="noopener" class="boton boton--primario" data-evento="whatsapp">
+      <a
+        href={SITE.whatsappTurno}
+        target="_blank"
+        rel="noopener"
+        class="boton boton--primario"
+        data-analytics-event="appointment_request"
+        data-analytics-contact-method="whatsapp"
+        data-analytics-link-location="home_final"
+        data-analytics-cta-id="home_final_appointment"
+      >
         <Icono nombre="whatsapp" />
         Solicitar turno
       </a>

@@ -4,19 +4,48 @@ import { SITE } from '../data/site';
 ---
 
 <nav class="barra-movil" aria-label="Accesos rápidos">
-  <a href={SITE.whatsappTurno} target="_blank" rel="noopener" data-evento="whatsapp">
+  <a
+    href={SITE.whatsappTurno}
+    target="_blank"
+    rel="noopener"
+    data-analytics-event="appointment_request"
+    data-analytics-contact-method="whatsapp"
+    data-analytics-link-location="quick_access"
+    data-analytics-cta-id="quick_appointment"
+  >
     <Icono nombre="calendario" />
     <span>Turnos</span>
   </a>
-  <a href={SITE.whatsapp} target="_blank" rel="noopener" data-evento="whatsapp">
+  <a
+    href={SITE.whatsapp}
+    target="_blank"
+    rel="noopener"
+    data-analytics-event="contact_click"
+    data-analytics-contact-method="whatsapp"
+    data-analytics-link-location="quick_access"
+  >
     <Icono nombre="whatsapp" />
     <span>WhatsApp</span>
   </a>
-  <a href={SITE.instagram} target="_blank" rel="noopener">
+  <a
+    href={SITE.instagram}
+    target="_blank"
+    rel="noopener"
+    data-analytics-event="outbound_click"
+    data-analytics-destination-type="instagram"
+    data-analytics-link-location="quick_access"
+  >
     <Icono nombre="instagram" />
     <span>Instagram</span>
   </a>
-  <a href={SITE.mapsLink} target="_blank" rel="noopener">
+  <a
+    href={SITE.mapsLink}
+    target="_blank"
+    rel="noopener"
+    data-analytics-event="outbound_click"
+    data-analytics-destination-type="maps"
+    data-analytics-link-location="quick_access"
+  >
     <Icono nombre="ubicacion" />
     <span>Cómo llegar</span>
   </a>

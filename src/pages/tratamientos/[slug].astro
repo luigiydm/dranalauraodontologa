@@ -76,7 +76,17 @@ const otros = tratamientos.filter((t) => t.slug !== tratamiento.slug);
       {tratamiento.cierre && <p class="cuerpo__cierre">{tratamiento.cierre}</p>}
 
       <div class="cuerpo__cta">
-        <a href={SITE.whatsappTurno} target="_blank" rel="noopener" class="boton boton--primario" data-evento="whatsapp">
+        <a
+          href={SITE.whatsappTurno}
+          target="_blank"
+          rel="noopener"
+          class="boton boton--primario"
+          data-analytics-event="appointment_request"
+          data-analytics-contact-method="whatsapp"
+          data-analytics-link-location="treatment_detail"
+          data-analytics-cta-id="treatment_appointment"
+          data-analytics-treatment-id={tratamiento.slug}
+        >
           <Icono nombre="whatsapp" />
           Solicitar turno
         </a>
@@ -88,7 +98,18 @@ const otros = tratamientos.filter((t) => t.slug !== tratamiento.slug);
     <div class="contenedor">
       <h2 class="titulo-seccion">Otros tratamientos</h2>
       <nav class="otros__lista" aria-label="Otros tratamientos">
-        {otros.map((t) => <a href={`/tratamientos/${t.slug}`}>{t.titulo}</a>)}
+        {otros.map((t, i) => (
+          <a
+            href={`/tratamientos/${t.slug}`}
+            data-analytics-event="select_content"
+            data-analytics-content-type="treatment"
+            data-analytics-item-id={t.slug}
+            data-analytics-item-name={t.titulo}
+            data-analytics-content-location="related_treatments"
+            data-analytics-item-position={i + 1}
+            data-analytics-source-item-id={tratamiento.slug}
+          >{t.titulo}</a>
+        ))}
       </nav>
     </div>
   </section>

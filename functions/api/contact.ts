@@ -34,9 +34,9 @@ const MENSAJES: Record<string, string> = {
  * no corrió, el navegador hace un POST nativo y navega a esta respuesta: ahí
  * devolvemos una página, no el JSON crudo.
  */
-const responder = (request: Request, estado: number, error?: string) => {
+const responder = (request: Request, estado: number, error?: string, ignored = false) => {
   const aceptaJson = (request.headers.get('accept') ?? '').includes('application/json');
-  const cuerpo = error ? { ok: false, error } : { ok: true };
+  const cuerpo = error ? { ok: false, error } : { ok: true, ...(ignored ? { ignored: true } : {}) };
 
   if (aceptaJson) {
     return new Response(JSON.stringify(cuerpo), {
@@ -67,7 +67,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 
   // Honeypot: los bots completan el campo oculto.
   if (datos.get('website')) {
-    return responder(request, 200);
+    return responder(request, 200, undefined, true);
   }
 
   const nombre = String(datos.get('nombre') ?? '').trim();

@@ -17,19 +17,43 @@ const anio = new Date().getFullYear();
       <ul>
         <li>
           <Icono nombre="ubicacion" />
-          <a href={SITE.mapsLink} target="_blank" rel="noopener">{SITE.direccion}</a>
+          <a
+            href={SITE.mapsLink}
+            target="_blank"
+            rel="noopener"
+            data-analytics-event="outbound_click"
+            data-analytics-destination-type="maps"
+            data-analytics-link-location="footer_contact"
+          >{SITE.direccion}</a>
         </li>
         <li>
           <Icono nombre="telefono" />
-          <a href={SITE.telefonoHref} data-evento="telefono">{SITE.telefono}</a>
+          <a
+            href={SITE.telefonoHref}
+            data-analytics-event="contact_click"
+            data-analytics-contact-method="phone"
+            data-analytics-link-location="footer_contact"
+          >{SITE.telefono}</a>
         </li>
         <li>
           <Icono nombre="email" />
-          <a href={SITE.emailHref} data-evento="email">{SITE.email}</a>
+          <a
+            href={SITE.emailHref}
+            data-analytics-event="contact_click"
+            data-analytics-contact-method="email"
+            data-analytics-link-location="footer_contact"
+          >{SITE.email}</a>
         </li>
         <li>
           <Icono nombre="whatsapp" />
-          <a href={SITE.whatsapp} target="_blank" rel="noopener" data-evento="whatsapp">Contactanos por WhatsApp</a>
+          <a
+            href={SITE.whatsapp}
+            target="_blank"
+            rel="noopener"
+            data-analytics-event="contact_click"
+            data-analytics-contact-method="whatsapp"
+            data-analytics-link-location="footer_contact"
+          >Contactanos por WhatsApp</a>
         </li>
       </ul>
     </div>
@@ -44,9 +68,33 @@ const anio = new Date().getFullYear();
         <li><a href="/#contacto">Contacto</a></li>
       </ul>
       <div class="footer__redes">
-        <a href={SITE.instagram} target="_blank" rel="noopener" aria-label="Instagram"><Icono nombre="instagram" /></a>
-        <a href={SITE.facebook} target="_blank" rel="noopener" aria-label="Facebook"><Icono nombre="facebook" /></a>
-        <a href={SITE.whatsapp} target="_blank" rel="noopener" aria-label="WhatsApp" data-evento="whatsapp"><Icono nombre="whatsapp" /></a>
+        <a
+          href={SITE.instagram}
+          target="_blank"
+          rel="noopener"
+          aria-label="Instagram"
+          data-analytics-event="outbound_click"
+          data-analytics-destination-type="instagram"
+          data-analytics-link-location="footer_social"
+        ><Icono nombre="instagram" /></a>
+        <a
+          href={SITE.facebook}
+          target="_blank"
+          rel="noopener"
+          aria-label="Facebook"
+          data-analytics-event="outbound_click"
+          data-analytics-destination-type="facebook"
+          data-analytics-link-location="footer_social"
+        ><Icono nombre="facebook" /></a>
+        <a
+          href={SITE.whatsapp}
+          target="_blank"
+          rel="noopener"
+          aria-label="WhatsApp"
+          data-analytics-event="contact_click"
+          data-analytics-contact-method="whatsapp"
+          data-analytics-link-location="footer_social"
+        ><Icono nombre="whatsapp" /></a>
       </div>
     </div>
   </div>

@@ -7,16 +7,40 @@ import { SITE } from '../data/site';
 
 <div class="barra-superior">
   <div class="contenedor barra-superior__inner">
-    <a href={SITE.mapsLink} target="_blank" rel="noopener" class="barra-superior__dir">
+    <a
+      href={SITE.mapsLink}
+      target="_blank"
+      rel="noopener"
+      class="barra-superior__dir"
+      data-analytics-event="outbound_click"
+      data-analytics-destination-type="maps"
+      data-analytics-link-location="header_top"
+    >
       <Icono nombre="ubicacion" />
       <span class="dir-completa">{SITE.direccion}</span>
       <span class="dir-corta">Moreno 431, Quilmes</span>
     </a>
     <div class="barra-superior__redes">
-      <a href={SITE.whatsapp} target="_blank" rel="noopener" aria-label="WhatsApp" data-evento="whatsapp">
+      <a
+        href={SITE.whatsapp}
+        target="_blank"
+        rel="noopener"
+        aria-label="WhatsApp"
+        data-analytics-event="contact_click"
+        data-analytics-contact-method="whatsapp"
+        data-analytics-link-location="header_top"
+      >
         <Icono nombre="whatsapp" />
       </a>
-      <a href={SITE.instagram} target="_blank" rel="noopener" aria-label="Instagram">
+      <a
+        href={SITE.instagram}
+        target="_blank"
+        rel="noopener"
+        aria-label="Instagram"
+        data-analytics-event="outbound_click"
+        data-analytics-destination-type="instagram"
+        data-analytics-link-location="header_top"
+      >
         <Icono nombre="instagram" />
       </a>
     </div>
@@ -47,17 +71,66 @@ import { SITE } from '../data/site';
       <div class="nav__desplegable">
         <a href="/tratamientos" class="nav__desplegable-trigger">Tratamientos</a>
         <div class="nav__submenu">
-          <a href="/tratamientos/estetica-dental">Estética dental</a>
-          <a href="/tratamientos/rehabilitacion-oral">Rehabilitación oral</a>
-          <a href="/tratamientos/implantes-y-protesis">Implantes y prótesis</a>
-          <a href="/tratamientos/ortodoncia">Ortodoncia</a>
-          <a href="/tratamientos/odontologia-general">Odontología general</a>
+          <a
+            href="/tratamientos/estetica-dental"
+            data-analytics-event="select_content"
+            data-analytics-content-type="treatment"
+            data-analytics-item-id="estetica-dental"
+            data-analytics-item-name="Estética dental"
+            data-analytics-content-location="header_submenu"
+            data-analytics-item-position="1"
+          >Estética dental</a>
+          <a
+            href="/tratamientos/rehabilitacion-oral"
+            data-analytics-event="select_content"
+            data-analytics-content-type="treatment"
+            data-analytics-item-id="rehabilitacion-oral"
+            data-analytics-item-name="Rehabilitación oral"
+            data-analytics-content-location="header_submenu"
+            data-analytics-item-position="2"
+          >Rehabilitación oral</a>
+          <a
+            href="/tratamientos/implantes-y-protesis"
+            data-analytics-event="select_content"
+            data-analytics-content-type="treatment"
+            data-analytics-item-id="implantes-y-protesis"
+            data-analytics-item-name="Implantes y prótesis dentales"
+            data-analytics-content-location="header_submenu"
+            data-analytics-item-position="3"
+          >Implantes y prótesis</a>
+          <a
+            href="/tratamientos/ortodoncia"
+            data-analytics-event="select_content"
+            data-analytics-content-type="treatment"
+            data-analytics-item-id="ortodoncia"
+            data-analytics-item-name="Ortodoncia"
+            data-analytics-content-location="header_submenu"
+            data-analytics-item-position="4"
+          >Ortodoncia</a>
+          <a
+            href="/tratamientos/odontologia-general"
+            data-analytics-event="select_content"
+            data-analytics-content-type="treatment"
+            data-analytics-item-id="odontologia-general"
+            data-analytics-item-name="Odontología general"
+            data-analytics-content-location="header_submenu"
+            data-analytics-item-position="5"
+          >Odontología general</a>
         </div>
       </div>
       <a href="/preguntas-frecuentes">Preguntas frecuentes</a>
       <a href="/articulos">Artículos</a>
       <a href="/#contacto">Contacto</a>
-      <a href={SITE.whatsappTurno} target="_blank" rel="noopener" class="boton boton--primario nav__cta" data-evento="whatsapp">
+      <a
+        href={SITE.whatsappTurno}
+        target="_blank"
+        rel="noopener"
+        class="boton boton--primario nav__cta"
+        data-analytics-event="appointment_request"
+        data-analytics-contact-method="whatsapp"
+        data-analytics-link-location="header_nav"
+        data-analytics-cta-id="header_appointment"
+      >
         Solicitar turno
       </a>
     </nav>

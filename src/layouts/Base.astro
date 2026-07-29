@@ -25,10 +25,12 @@ const tituloCompleto =
 const rutaCanonica = Astro.url.pathname.replace(/index\.html$/, '').replace(/\.html$/, '');
 const urlCanonica = new URL(rutaCanonica, SITE.url).href;
 const GTM_ID = import.meta.env.PUBLIC_GTM_ID;
+const GA_ID = import.meta.env.PUBLIC_GA_ID;
+const ANALYTICS_ENABLED = Boolean(GTM_ID && GA_ID);
 ---
 
 <!doctype html>
-<html lang="es-AR">
+<html lang="es-AR" data-analytics-destination={ANALYTICS_ENABLED ? GA_ID : undefined}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -54,7 +56,7 @@ const GTM_ID = import.meta.env.PUBLIC_GTM_ID;
     <meta name="twitter:card" content="summary_large_image" />
 
     {
-      GTM_ID && (
+      ANALYTICS_ENABLED && (
         <script
           is:inline
           define:vars={{ GTM_ID }}
@@ -75,7 +77,7 @@ const GTM_ID = import.meta.env.PUBLIC_GTM_ID;
   </head>
   <body>
     {
-      GTM_ID && (
+      ANALYTICS_ENABLED && (
         <noscript>
           <iframe
             src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
@@ -118,22 +120,175 @@ const GTM_ID = import.meta.env.PUBLIC_GTM_ID;
     </script>
 
     <script>
-      // Eventos básicos para GA4 (vía GTM): click WhatsApp / teléfono / email.
+      type AnalyticsValue = string | number | boolean;
+      type AnalyticsParams = Record<string, AnalyticsValue>;
+
       declare global {
         interface Window {
-          dataLayer?: Record<string, unknown>[];
+          dataLayer?: unknown[];
+          gtag?: (command: 'event', eventName: string, params: AnalyticsParams) => void;
+          trackAnalytics?: (eventName: string, params?: AnalyticsParams) => void;
+          google_tag_data?: {
+            tidr?: {
+              destinationArray?: Record<string, { state?: number }[]>;
+            };
+          };
         }
       }
-      document.addEventListener('click', (e) => {
-        const enlace = (e.target as HTMLElement).closest('a[data-evento]');
-        if (!enlace) return;
-        const tipo = enlace.getAttribute('data-evento');
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: `click_${tipo}`,
-          destino: enlace.getAttribute('href') ?? '',
+
+      const destinoAnalytics = document.documentElement.dataset.analyticsDestination;
+      const ruta = window.location.pathname.replace(/\/$/, '') || '/';
+      const tipoPagina = ruta === '/'
+        ? 'home'
+        : ruta === '/tratamientos'
+          ? 'treatments'
+          : ruta.startsWith('/tratamientos/')
+            ? 'treatment_detail'
+            : ruta === '/articulos'
+              ? 'articles'
+              : ruta === '/preguntas-frecuentes'
+                ? 'faq'
+                : 'other';
+      const tratamientoActual = tipoPagina === 'treatment_detail'
+        ? decodeURIComponent(ruta.split('/').pop() ?? '')
+        : '';
+
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function () {
+        window.dataLayer?.push(arguments);
+      };
+      window.trackAnalytics = (eventName, params = {}) => {
+        if (!destinoAnalytics) return;
+        window.gtag?.('event', eventName, {
+          page_type: tipoPagina,
+          ...(tratamientoActual ? { treatment_id: tratamientoActual } : {}),
+          ...params,
+          send_to: destinoAnalytics,
         });
-      });
+      };
+
+      const destinoAnalyticsListo = () => Boolean(
+        destinoAnalytics
+        && window.google_tag_data?.tidr
+          ?.destinationArray?.[destinoAnalytics]
+          ?.some(({ state }) => state === 2)
+      );
+
+      // Los enlaces internos cambian de documento antes de que GA4 alcance a
+      // despachar el evento; se reintenta en destino conservando la URL origen.
+      const eventoPendienteKey = 'analytics_pending_navigation_event';
+      try {
+        const eventoPendiente = window.sessionStorage.getItem(eventoPendienteKey);
+        if (eventoPendiente) {
+          const { eventName, params, destinationPath, createdAt } = JSON.parse(eventoPendiente) as {
+            eventName?: unknown;
+            params?: unknown;
+            destinationPath?: unknown;
+            createdAt?: unknown;
+          };
+          const destinoActual = `${window.location.pathname}${window.location.search}`;
+          const eventoValido = destinationPath === destinoActual
+            && typeof createdAt === 'number'
+            && Date.now() - createdAt < 30_000;
+
+          if (
+            eventoValido
+            && typeof eventName === 'string'
+            && params
+            && typeof params === 'object'
+            && destinoAnalytics
+          ) {
+            const enviarAlInicializar = (intento = 0) => {
+              if (destinoAnalyticsListo()) {
+                window.gtag?.('event', eventName, {
+                  ...(params as AnalyticsParams),
+                  send_to: destinoAnalytics,
+                });
+                window.sessionStorage.removeItem(eventoPendienteKey);
+                return;
+              }
+              if (intento < 300) {
+                window.setTimeout(() => enviarAlInicializar(intento + 1), 100);
+              }
+            };
+            enviarAlInicializar();
+          } else {
+            window.sessionStorage.removeItem(eventoPendienteKey);
+          }
+        }
+      } catch {
+        try {
+          window.sessionStorage.removeItem(eventoPendienteKey);
+        } catch {
+          // Analytics no debe afectar la navegación si el storage no está disponible.
+        }
+      }
+
+      const aSnakeCase = (valor: string) =>
+        valor.replace(/[A-Z]/g, (letra) => `_${letra.toLowerCase()}`);
+
+      document.addEventListener('click', (e) => {
+        if (!(e.target instanceof Element)) return;
+        const elemento = e.target.closest<HTMLElement>('[data-analytics-event]');
+        const evento = elemento?.dataset.analyticsEvent;
+        if (!elemento || !evento) return;
+
+        const parametros: AnalyticsParams = {};
+        Object.entries(elemento.dataset).forEach(([clave, valor]) => {
+          if (!clave.startsWith('analytics') || clave === 'analyticsEvent' || valor === undefined) return;
+          const nombre = clave.slice('analytics'.length);
+          const parametro = aSnakeCase(nombre.charAt(0).toLowerCase() + nombre.slice(1));
+          parametros[parametro] = parametro === 'item_position' ? Number(valor) : valor;
+        });
+
+        if (elemento instanceof HTMLAnchorElement && /^https?:/.test(elemento.href)) {
+          const url = new URL(elemento.href);
+          if (url.origin !== window.location.origin) {
+            parametros.link_domain = url.hostname.replace(/^www\./, '');
+          }
+        }
+
+        const urlInterna = elemento instanceof HTMLAnchorElement
+          ? new URL(elemento.href, window.location.href)
+          : null;
+        const navegacionInterna = Boolean(
+          destinoAnalytics
+          && e instanceof MouseEvent
+          && e.button === 0
+          && !e.metaKey
+          && !e.ctrlKey
+          && !e.shiftKey
+          && !e.altKey
+          && elemento instanceof HTMLAnchorElement
+          && !elemento.target
+          && !elemento.hasAttribute('download')
+          && urlInterna?.origin === window.location.origin
+          && (urlInterna.pathname !== window.location.pathname || urlInterna.search !== window.location.search)
+        );
+
+        if (navegacionInterna && urlInterna) {
+          try {
+            window.sessionStorage.setItem(eventoPendienteKey, JSON.stringify({
+              eventName: evento,
+              destinationPath: `${urlInterna.pathname}${urlInterna.search}`,
+              createdAt: Date.now(),
+              params: {
+                page_type: tipoPagina,
+                ...(tratamientoActual ? { treatment_id: tratamientoActual } : {}),
+                page_location: new URL(window.location.pathname, window.location.origin).href,
+                page_title: document.title,
+                destination_path: urlInterna.pathname,
+                ...parametros,
+              },
+            }));
+            return;
+          } catch {
+            // Si el navegador bloquea sessionStorage, se intenta enviar antes de navegar.
+          }
+        }
+
+        window.trackAnalytics?.(evento, parametros);
+      }, { capture: true });
     </script>
   </body>
 </html>

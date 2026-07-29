@@ -22,8 +22,17 @@ import { tratamientos } from '../../data/tratamientos';
     <div class="contenedor">
       <div class="tratamientos__grilla">
         {
-          tratamientos.map((tratamiento) => (
-            <a class="tratamiento" href={`/tratamientos/${tratamiento.slug}`}>
+          tratamientos.map((tratamiento, i) => (
+            <a
+              class="tratamiento"
+              href={`/tratamientos/${tratamiento.slug}`}
+              data-analytics-event="select_content"
+              data-analytics-content-type="treatment"
+              data-analytics-item-id={tratamiento.slug}
+              data-analytics-item-name={tratamiento.titulo}
+              data-analytics-content-location="treatment_directory"
+              data-analytics-item-position={i + 1}
+            >
               <div class="tratamiento__icono">
                 <Icono nombre={tratamiento.icono} />
               </div>

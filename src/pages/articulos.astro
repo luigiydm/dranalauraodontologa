@@ -14,12 +14,18 @@ import { articulos } from '../data/articulos';
 
       <div class="articulos__grilla">
         {
-          articulos.map((articulo) => (
+          articulos.map((articulo, i) => (
             <article class="articulo">
               <button
                 class="articulo__video"
                 data-video={articulo.youtubeId}
                 data-start={articulo.start ?? 0}
+                data-analytics-event="select_content"
+                data-analytics-content-type="video"
+                data-analytics-item-id={articulo.youtubeId}
+                data-analytics-item-name={articulo.titulo}
+                data-analytics-content-location="articles"
+                data-analytics-item-position={i + 1}
                 aria-label={`Reproducir video: ${articulo.titulo}`}
               >
                 <img
